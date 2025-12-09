@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+
+*{
+  box-sizing: border-box;
+  /* background-color: #0A0A0A; */
+  font-size: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /* font-family: 'Times New Roman', Times, serif; */
+}
+
+html,body{
+  width: 100vw;
+  height: 100vh;
+  scroll-behavior: smooth;
+}
+
+.myHighlight {
+  background: #ffa50090; /* semi-orange highlight */
+  border-radius: 3px;
+}
