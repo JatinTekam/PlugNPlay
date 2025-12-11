@@ -6,7 +6,7 @@ import { DemoCodes } from "../utils/utils";
 function HeroSection({darkMode}) {
 
   return (
-    <div className="pt-4 mb-25 ">
+    <div className="pt-4 mb-40 ">
       <div className=" w-[60%] h-90 md:h-60 mx-auto text-center flex flex-col items-center">
       <h1 className={`text-center ${darkMode ? "text-black"  : ""}  text-[#a1a1a1] text-4xl font-bold  text-shadow-white`}>
         Skip Setup. Start <span className="bg-[#a1a1a1] text-black  rounded">Building</span>.

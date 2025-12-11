@@ -18,7 +18,6 @@ export default function BasicCard({card,darkMode}) {
   let color= darkMode ? "black" : "white";
   return (
     <Card
-    // className={`${darkMode?"text-black":"rgba(98, 96, 96, 0.2)"}`}
       sx={{
         color:color,
         width: "350px",

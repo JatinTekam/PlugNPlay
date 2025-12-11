@@ -1,15 +1,16 @@
 import Editor from "@monaco-editor/react";
+import {DemoCodes} from "../utils/utils"
 
-export default function VSCodeWindow({ DemoCodes = {} }) {
+export default function VSCodeIn() {
  return (
     <div
       style={{
-        width: "300px",
+        width: "500px",
         height: "500px",
         borderRadius: "10px",
         overflow: "hidden",
         background: "#1e1e1e",
-        boxShadow: "0 10px 30px rgba(255, 251, 251, 0.62)",
+        // boxShadow: "0 10px 30px rgba(255, 251, 251, 0.62)",
       }}
     >
       {/* Title Bar */}
@@ -30,15 +31,15 @@ export default function VSCodeWindow({ DemoCodes = {} }) {
 
         {/* File name */}
         <span style={{ color: "#ccc", marginLeft: "10px", fontSize: "14px" }}>
-          Main.{DemoCodes.extension}
+          Main.{DemoCodes[0].extension}
         </span>
       </div>
 
       {/* Monaco Editor */}
       <Editor
         height="100%"
-        defaultLanguage={DemoCodes.language}
-        defaultValue={DemoCodes.code}
+        defaultLanguage={DemoCodes[0].language}
+        defaultValue={DemoCodes[0].code}
         theme="vs-dark"
         options={{
           minimap: { enabled: false },

@@ -7,11 +7,9 @@ import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 public class PlugNPlayApplication {
-	
 
 	public static void main(String[] args) {
 	SpringApplication.run(PlugNPlayApplication.class, args);
-
 
 	}
 

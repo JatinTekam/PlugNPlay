@@ -1,6 +1,6 @@
-import image1 from "../utils/open-source.png"
-import image2 from "../utils/code.png"
-import image3 from "../utils/easy-installation.png"
+import image1 from "../utils/images/open-source.png"
+import image2 from "../utils/images/code.png"
+import image3 from "../utils/images/easy-installation.png"
 
 export const DemoCodes = [
   {
