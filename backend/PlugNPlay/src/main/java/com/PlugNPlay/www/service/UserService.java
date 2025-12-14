@@ -1,5 +1,6 @@
 package com.PlugNPlay.www.service;
-import com.PlugNPlay.www.dto.UserDto;
+import com.PlugNPlay.www.dto.UserDTO;
+
 
 import java.util.UUID;
 
@@ -7,22 +8,22 @@ import java.util.UUID;
 public interface UserService {
 
     //Create User
-    UserDto createUser(UserDto user);
+    UserDTO createUser(UserDTO user);
 
     //Get User By Email
-    UserDto getUserByEmail(String email);
+    UserDTO getUserByEmail(String email);
 
     //Update User
-    UserDto updateUser(UserDto userDto,String userId);
+    UserDTO updateUser(UserDTO UserDTO,String userId);
 
     //Delete User
     void deleteUser(String userId);
 
     //Get User By Id
-    UserDto getUserById(String userId);
+    UserDTO getUserById(String userId);
 
     //Get All Users
-    Iterable<UserDto> getAllUsers();
+    Iterable<UserDTO> getAllUsers();
 
 
 }

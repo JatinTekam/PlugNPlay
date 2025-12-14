@@ -15,7 +15,7 @@ const bull = (
 export default function BasicCard({card,darkMode}) {
 
   let bgColor= darkMode ? "white" :"rgba(98, 96, 96, 0.2)";
-  let color= darkMode ? "black" : "white";
+  let color= darkMode ? "white" : "black";
   return (
     <Card
       sx={{
@@ -35,7 +35,7 @@ export default function BasicCard({card,darkMode}) {
             <img src={card.img} alt="" className="w-full"/>
           </div>
           <h1 className={`text-3xl ${darkMode ? "text-black" : ""} mb-2`}>{card.title}</h1>
-          <p className={`${darkMode ? "text-black" : "text-[rgba(255,255,255,0.7)]"} `}>{card.desc}</p>
+          <p className={`${darkMode ? "text-black" : "text-black"} `}>{card.desc}</p>
         </div>
       </CardContent>
     </Card>

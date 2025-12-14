@@ -1,4 +1,4 @@
-package com.PlugNPlay.www.entity;
+package com.PlugNPlay.www.enums;
 
 public enum Provider {
 

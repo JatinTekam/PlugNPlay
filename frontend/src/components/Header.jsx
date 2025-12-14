@@ -4,23 +4,24 @@ import { MdSunny } from "react-icons/md";
 import { CiMenuBurger } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 function Header({handleDarkMode,darkMode}) {
   const[mobileMenu,setMobileMenu]=useState(false);
 
   return (
     <div className="w-screen h-20 pt-4">
-      <nav className={`w-[90%] ${darkMode ? "text-black"  : "text-white"} items-center m-auto   block md:w-[60%] md:mx-auto flex justify-between`}>
+      <nav className={`w-[90%] ${darkMode ? "text-white"  : "text-black"} items-center m-auto   block md:w-[60%] md:mx-auto flex justify-between`}>
         <h1 className="text-2xl cursor-pointer">PlugNPlay</h1>
       <div className=" items-center justify-center gap-4 text-[#a1a1a1]  hidden md:block md:flex">
-        <button className={`w-4 pt-1 cursor-pointer ${darkMode ? "text-black"  : "text-white"}  `} onClick={()=>handleDarkMode(!darkMode)}>
+        <button className={`w-4 pt-1 cursor-pointer ${darkMode ? "text-white"  : "text-black"}  `} onClick={()=>handleDarkMode(!darkMode)}>
           {
             darkMode ? <MdSunny/>  : <GoSun/>
           }
         </button>
-        <button className={` hover:border-b p-1 ${darkMode ? "text-black"  : "text-white"}  transition duration-150 cursor-pointer ${darkMode ? "" : "hover:text-white"}`}>Sign up</button>
-        <button className={`hover:border-b p-1 ${darkMode ? "text-black"  : "text-white"}  cursor-pointer ${darkMode ? "" : "hover:text-white"}`}>Login in</button>
-        <div className={`text-xl p-1 ${darkMode ? "bg-black rounded-2xl"  : "text-white"}  cursor-pointer hover:text-white`}><FaGithub className="hover:text-white text-[#a1a1a1]"/></div>
+        <button className={` hover:border-b p-1 ${darkMode ? "text-[#a1a1a1]"  : "text-black"}  transition duration-150 cursor-pointer ${darkMode ? "" : ""}`}>Sign up</button>
+        <button className={`hover:border-b p-1 ${darkMode ? "text-[#a1a1a1]"  : "text-black"}  cursor-pointer`} ><NavLink to="/login">Log in</NavLink></button>
+        <div className={`text-xl p-1 ${darkMode ? "bg-black rounded-2xl"  : "text-black"}  cursor-pointer hover:text-white`}><FaGithub className={`${darkMode ? "text-white" : "text-black"}`}/></div>
       </div>
       <div className="block md:hidden flex items-center gap-4">
          <button className={`w-4 pt-1 cursor-pointer ${darkMode ? "text-black"  : "text-white"}  `} onClick={()=>handleDarkMode(!darkMode)}>

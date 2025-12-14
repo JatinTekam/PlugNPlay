@@ -7,8 +7,8 @@ function LanguageSupport({darkMode}){
 
    return(
    <div className="m-auto w-[70%] h-[160px]">
-    <h1 className={`text-center text-2xl ${darkMode ? "text-black" : "text-[rgba(255,255,255,0.7)]"} `}>Supported Language's</h1>
-    <div className={` mt-5 flex justify-center items-center gap-3 ${darkMode ? "text-black" : "text-white"} `}>
+    <h1 className={`text-center text-2xl ${darkMode ? "text-white" : "text-black"} `}>Supported Language's</h1>
+    <div className={` mt-5 flex justify-center items-center gap-3 ${darkMode ? "text-white" : "text-black"} `}>
         <FaJava className="text-5xl"/>
         <IoLogoJavascript className="text-5xl"/>
         <SiTypescript className="text-[40px]"/>

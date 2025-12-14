@@ -5,13 +5,12 @@ import lombok.*;
 
 import java.util.UUID;
 
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
-@Entity
 public class CodeSnippest {
 
     @Id

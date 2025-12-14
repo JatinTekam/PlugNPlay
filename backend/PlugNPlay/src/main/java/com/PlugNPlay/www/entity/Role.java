@@ -1,17 +1,14 @@
 package com.PlugNPlay.www.entity;
-
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.UUID;
 
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
-@Entity
 public class Role {
 
     @Id
