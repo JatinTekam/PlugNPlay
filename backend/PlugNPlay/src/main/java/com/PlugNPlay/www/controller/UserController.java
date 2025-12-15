@@ -1,5 +1,6 @@
 package com.PlugNPlay.www.controller;
 import com.PlugNPlay.www.dto.UserDTO;
+import com.PlugNPlay.www.exceptions.ResourceNotFoundException;
 import com.PlugNPlay.www.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,32 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @GetMapping("{email}")
+    //Get User By Email
+    @GetMapping("/email/{email}")
     public ResponseEntity<UserDTO> getUserByEmail(@PathVariable String email){
         return ResponseEntity.ok(userService.getUserByEmail(email));
     }
+
+    //Delete User By Id
+    @DeleteMapping("/{userId}")
+    public void deleteUser(@PathVariable String userId){
+        userService.deleteUser(userId);
+    }
+
+    //Update The User
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO,@PathVariable String userId){
+        return ResponseEntity.ok(userService.updateUser(userDTO,userId));
+    }
+
+
+    //Get User By Id
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable String userId){
+        return ResponseEntity.ok(userService.getUserById(userId));
+    }
+
+
 
 
 

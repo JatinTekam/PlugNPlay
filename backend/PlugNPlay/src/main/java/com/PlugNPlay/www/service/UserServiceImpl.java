@@ -11,6 +11,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,11 +35,11 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDTO createUser(UserDTO userDto) {
 
-        if (userDto.getName() != null && userDto.getName().isBlank()) {
+        if (userDto.getName() == null && userDto.getName().isBlank()) {
             throw new IllegalArgumentException("Name Is Required");
         }
 
-        if (userDto.getEmail() != null && userDto.getEmail().isBlank()) {
+        if (userDto.getEmail() == null && userDto.getEmail().isBlank()) {
             throw new IllegalArgumentException("Email Is Required");
         }
 
@@ -45,11 +51,12 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Password Is Required");
         }
 
+
         User user = modelMapper.map(userDto, User.class);
 
         user.setProvider(userDto.getProvider()!=null ? userDto.getProvider() : Provider.LOCAL);
 
-        User savedUser = userRepository.save(user);
+        User savedUser = userRepository.saveAndFlush(user);
 
         return modelMapper.map(savedUser,UserDTO.class);
     }
@@ -67,18 +74,42 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDTO updateUser(UserDTO userDto, String userId) {
-        return null;
+        UUID uid = UUID.fromString(userId);
+        User dbUser = userRepository
+                   .findById(uid)
+                   .orElseThrow(() -> new ResourceNotFoundException("User Not Found With Given Id"));
+
+        if(userDto.getName()!=null) dbUser.setName(userDto.getName());
+        if(userDto.getProvider()!=null) dbUser.setProvider(userDto.getProvider());
+
+        if(userDto.getPassword()!=null) dbUser.setPassword(userDto.getPassword());
+
+        dbUser.setEnable(userDto.isEnable());
+        dbUser.setUpdatedTime(LocalDateTime.now());
+        User updatadedUser = userRepository.save(dbUser);
+
+        return modelMapper.map(updatadedUser,UserDTO.class);
     }
 
     @Override
     public void deleteUser(String userId) {
+        UUID uid = UUID.fromString(userId);
+        User user = userRepository
+                .findById(uid)
+                .orElseThrow(() -> new ResourceNotFoundException("User Not Found With Given Id"));
 
+        userRepository.delete(user);
     }
 
     @Override
     public UserDTO getUserById(String userId) {
-        return null;
+        UUID uid = UUID.fromString(userId);
+        User user = userRepository.findById(uid)
+                .orElseThrow(() -> new ResourceNotFoundException("User Not Found With Given Id"));
+
+        return modelMapper.map(user,UserDTO.class);
     }
 
     @Override
