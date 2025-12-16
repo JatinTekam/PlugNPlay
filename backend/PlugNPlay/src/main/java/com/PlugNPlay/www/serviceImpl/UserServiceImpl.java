@@ -1,20 +1,17 @@
-package com.PlugNPlay.www.service;
+package com.PlugNPlay.www.serviceImpl;
 
 import com.PlugNPlay.www.dto.UserDTO;
 import com.PlugNPlay.www.entity.User;
 import com.PlugNPlay.www.enums.Provider;
 import com.PlugNPlay.www.exceptions.ResourceNotFoundException;
 import com.PlugNPlay.www.repository.UserRepository;
+import com.PlugNPlay.www.service.UserService;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 
