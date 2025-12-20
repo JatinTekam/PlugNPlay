@@ -2,6 +2,7 @@ import Shadow from "./Shadow";
 import VSCodeWindow from "./VSCodeWindow";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { DemoCodes } from "../utils/utils";
+import { NavLink } from "react-router-dom";
 
 function HeroSection({darkMode}) {
 
@@ -13,7 +14,7 @@ function HeroSection({darkMode}) {
       </h1>
       <h2 className={`text-center ${darkMode ? "text-white"  : "text-black"} text-[#a1a1a1] text-md font-bold mt-3 text-shadow-white`}>Templates <span className="">Designed</span> To Accelerate Development.</h2>
       <h3 className={`${darkMode ? "text-[#a1a1a1]"  : "text-black"} text-[#a1a1a1] text-md`}>Efficient Code Templates for Modern Projects. Reusable Configs Built for Real Workflows.</h3>
-      <button className={` ${darkMode ? "bg-black"  : ""} ${darkMode ?  "text-white" : ""}  border-b transition-all duration-300 cursor-pointer hover:bg-white hover:text-black rounded py-2 rounded w-50 mt-9  flex justify-center items-center gap-2`}>Find Your Template <FaArrowRightLong/></button>
+      <button className={` ${darkMode ? "bg-black"  : ""} ${darkMode ?  "text-white" : ""}  border-b transition-all duration-300 cursor-pointer hover:bg-white hover:text-black rounded py-2 rounded w-50 mt-9  flex justify-center items-center gap-2`}><NavLink to="/templates">Find Your Template</NavLink> <FaArrowRightLong/></button>
       </div>
       <div className="relative w-[60%] h-[500px] text-white block mx-auto flex justify-center overflow-hidden">
         <div className="relative -left-25 hidden xl:block">

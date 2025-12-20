@@ -9,6 +9,7 @@ import Instruction from "./components/Instruction";
 import { Route, Routes } from "react-router-dom";
 import AppLayout from "./components/AppLayout";
 import Login from "./components/Login";
+import Templates from "./components/Templates";
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
@@ -24,11 +25,13 @@ function App() {
       <Routes>
         <Route
           path="/"
+          index
           element={
             <AppLayout handleDarkMode={handleDarkMode} darkMode={darkMode} />
           }
         />
           <Route path="/login" element={<Login/>}></Route>
+          <Route path="/templates" element={<Templates setDarkMode={setDarkMode} darkMode={darkMode}/>}></Route>
       </Routes>
     </div>
   );
