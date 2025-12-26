@@ -34,8 +34,8 @@ public class JWTService {
                       @Value("${security.jwt.issuer}") String issuer) {
 
 
-        if(secret==null && secret.length()<64){
-            throw new IllegalArgumentException("Invalid secret");
+        if(secret==null && secret.length()<25){
+            throw new IllegalArgumentException("JWT secret must be at least 64 characters");
         }
 
         this.key= Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
@@ -63,7 +63,7 @@ public class JWTService {
                         "roles", roles,
                         "typ", "access"
                 ))
-                .signWith(key,SignatureAlgorithm.ES512)
+                .signWith(key,SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -78,7 +78,7 @@ public class JWTService {
                 .issuedAt(Date.from(now))
                 .expiration(Date.from(now.plusSeconds(refreshTTLSecond)))
                 .claim("typ","refresh")
-                .signWith(key,SignatureAlgorithm.ES512)
+                .signWith(key,SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -120,6 +120,13 @@ public class JWTService {
     }
 
 
+    public long getAccessTTLSecond() {
+        return accessTTLSecond;
+    }
+
+    public long getRefreshTTLSecond() {
+        return refreshTTLSecond;
+    }
 
 
 
