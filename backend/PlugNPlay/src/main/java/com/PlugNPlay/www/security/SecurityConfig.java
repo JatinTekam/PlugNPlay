@@ -1,10 +1,12 @@
 package com.PlugNPlay.www.security;
 
 
+import com.PlugNPlay.www.dto.ApiError;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -39,13 +41,19 @@ public class SecurityConfig {
                 )
                 .exceptionHandling(exception->exception
                         .authenticationEntryPoint((request, response, authException) ->{
-                           authException.printStackTrace();
+                           //authException.printStackTrace();
                            response.setStatus(401);
                            response.setContentType("application/json");
-                           String message="Unauthorized access "+authException.getMessage();
-                            Map<String,String> errorMap=Map.of("message",message,"statusCode", String.valueOf(401));
+                            String message=authException.getMessage();
+                           String errorMessage=(String)request.getAttribute("error");
+                           if (errorMessage!=null){
+                                message=errorMessage;
+                           }
+
+                           // Map<String,Object> errorMap=Map.of("message",message,"statusCode", 401);
+                            var apiError= ApiError.of(HttpStatus.UNAUTHORIZED.value(), "Unauthorized Access",message,request.getRequestURI(),true);
                             var objectMapper=new ObjectMapper();
-                            response.getWriter().write(objectMapper.writeValueAsString(errorMap));
+                            response.getWriter().write(objectMapper.writeValueAsString(apiError));
                         }))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

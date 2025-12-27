@@ -3,6 +3,7 @@ package com.PlugNPlay.www.security;
 import com.PlugNPlay.www.entity.User;
 import com.PlugNPlay.www.exceptions.ResourceNotFoundException;
 import com.PlugNPlay.www.repository.UserRepository;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,6 +21,6 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username).orElseThrow(() -> new ResourceNotFoundException("User not found with given email id"));
+        return userRepository.findByEmail(username).orElseThrow(() -> new BadCredentialsException("Invalid Email And Password"));
     }
 }
