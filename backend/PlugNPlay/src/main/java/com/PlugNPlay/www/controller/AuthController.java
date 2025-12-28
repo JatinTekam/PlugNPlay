@@ -1,6 +1,4 @@
 package com.PlugNPlay.www.controller;
-
-
 import com.PlugNPlay.www.dto.LoginRequest;
 import com.PlugNPlay.www.dto.TokenResponse;
 import com.PlugNPlay.www.dto.UserDTO;
@@ -9,7 +7,9 @@ import com.PlugNPlay.www.entity.User;
 import com.PlugNPlay.www.repository.RefreshTokenRepository;
 import com.PlugNPlay.www.repository.UserRepository;
 import com.PlugNPlay.www.service.AuthService;
+import com.PlugNPlay.www.service.CookieService;
 import com.PlugNPlay.www.service.JWTService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.UUID;
 
 @RestController
@@ -30,18 +31,20 @@ public class AuthController {
     private final JWTService jwtService;
     private final ModelMapper modelMapper;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final CookieService cookieService;
 
-    public AuthController(AuthService authService, AuthenticationManager authenticationManager, UserRepository userRepository, JWTService jwtService, ModelMapper modelMapper, RefreshTokenRepository refreshTokenRepository) {
+    public AuthController(AuthService authService, AuthenticationManager authenticationManager, UserRepository userRepository, JWTService jwtService, ModelMapper modelMapper, RefreshTokenRepository refreshTokenRepository, CookieService cookieService) {
         this.authService = authService;
         this.authenticationManager = authenticationManager;
         this.userRepository=userRepository;
         this.jwtService=jwtService;
         this.modelMapper = modelMapper;
         this.refreshTokenRepository = refreshTokenRepository;
+        this.cookieService = cookieService;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response){
 
         Authentication authenticate = authenticate(loginRequest);
 
@@ -66,6 +69,9 @@ public class AuthController {
         //Generate Access Token
         String accessToken = jwtService.generateAccessToken(user);
         String refreshToken=jwtService.generateRefreshToken(user,refreshTokenDb.getJti());
+
+        cookieService.attachRefreshCookie(response,refreshToken, (int)jwtService.getRefreshTTLSecond());
+        cookieService.addNoStoreHeader(response);
 
         TokenResponse tokenResponse = TokenResponse.of(accessToken, refreshToken, jwtService.getAccessTTLSecond(), modelMapper.map(user, UserDTO.class));
 
