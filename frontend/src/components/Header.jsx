@@ -12,7 +12,7 @@ function Header({handleDarkMode,darkMode}) {
   return (
     <div className="w-screen h-20 pt-4">
       <nav className={`w-[90%] ${darkMode ? "text-white"  : "text-black"} items-center m-auto   block md:w-[60%] md:mx-auto flex justify-between`}>
-        <h1 className="text-2xl cursor-pointer">PlugNPlay</h1>
+        <h1 className="text-2xl cursor-pointer"><NavLink to="/">PlugNPlay</NavLink></h1>
       <div className=" items-center justify-center gap-4 text-[#a1a1a1]  hidden md:block md:flex">
         <button className={`w-4 pt-1 cursor-pointer ${darkMode ? "text-white"  : "text-black"}  `} onClick={()=>handleDarkMode(!darkMode)}>
           {
