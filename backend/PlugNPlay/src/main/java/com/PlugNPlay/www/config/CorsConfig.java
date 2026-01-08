@@ -5,17 +5,17 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
-@Configuration
-public class CorsConfig implements WebMvcConfigurer {
+//@Configuration
+//public class CorsConfig implements WebMvcConfigurer {
+//
+//    @Value("${FRONTEND_URL}")
+//    private String FRONTEND_URL;
+//
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//       registry.addMapping("/**")
+//               .allowedOrigins("/**");
+//    }
 
-    @Value("${FRONTEND_URL}")
-    private String FRONTEND_URL;
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-       registry.addMapping("/**")
-               .allowedOrigins("/**");
-    }
-
-
-}
+//}

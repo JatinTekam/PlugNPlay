@@ -9,6 +9,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -26,6 +27,12 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private final JWTService jwtService;
     private final CookieService cookieService;
     private final RefreshTokenRepository refreshTokenRepository;
+
+    @Value("${app.auth.frontend.success-redirect}")
+    private String frontEndSuccessUrl;
+
+    @Value("${app.auth.frontend.failure-redirect}")
+    private String frontEndFailureUrl;
 
     public OAuth2SuccessHandler(UserRepository userRepository, JWTService jwtService, CookieService cookieService, RefreshTokenRepository refreshTokenRepository) {
         this.userRepository = userRepository;
@@ -46,7 +53,8 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             registrationId=token.getAuthorizedClientRegistrationId();
         }
 
-        User user=new User();
+        User newUser=new User();
+        User user;
 
         switch (registrationId) {
             case "google" -> {
@@ -56,20 +64,42 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                 String name = oAuth2User.getAttributes().getOrDefault("name", "").toString();
                 // String picture=oAuth2User.getAttributes().getOrDefault("picture","").toString();
 
-                user.setEmail(email);
-                user.setName(name);
-                user.setEnable(true);
-                user.setProvider(Provider.GOOGLE);
+                newUser.setEmail(email);
+                newUser.setName(name);
+                newUser.setEnable(true);
+                newUser.setProvider(Provider.GOOGLE);
+                newUser.setProviderId(googleId);
 
-                userRepository.findByEmail(email).ifPresentOrElse(user1 -> {
-                }, () -> {
-                    userRepository.save(user);
-                });
+                user = userRepository.findByEmail(email).orElseGet(() -> userRepository.save(newUser));
+
+            }
+            case "github" -> {
+                String githubId=oAuth2User.getAttributes().getOrDefault("id","").toString();
+                String login = oAuth2User.getAttributes().getOrDefault("login","").toString();
+
+                String email = (String) oAuth2User.getAttributes().getOrDefault("email","");
+
+                if (email == null) {
+                    email = login + "@github.com";
+                }
+
+                String finalEmail = email;
+                user = userRepository.findByEmail(email)
+                        .orElseGet(() -> {
+                            User user1 = new User();
+                            user1.setEmail(finalEmail);
+                            user1.setEnable(true);
+                            user1.setProvider(Provider.GITHUB);
+                            user1.setProviderId(githubId);
+                            return userRepository.save(user1);
+                        });
             }
             default -> {
                 throw new RuntimeException("Invalid Provider");
             }
         }
+
+
 
         String jti = UUID.randomUUID().toString();
         RefreshToken refreshToken=new RefreshToken();
@@ -87,7 +117,8 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         cookieService.attachRefreshCookie(response,newRefreshToken,(int)jwtService.getRefreshTTLSecond());
 
 
-        response.getWriter().write("login successfully");
+        //response.getWriter().write("login successfully");
+        response.sendRedirect(frontEndSuccessUrl);
 
     }
 }
