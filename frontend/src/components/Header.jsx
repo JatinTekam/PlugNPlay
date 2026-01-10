@@ -12,14 +12,14 @@ function Header({handleDarkMode,darkMode}) {
   return (
     <div className="w-screen h-20 pt-4">
       <nav className={`w-[90%] ${darkMode ? "text-white"  : "text-black"} items-center m-auto   block md:w-[60%] md:mx-auto flex justify-between`}>
-        <h1 className="text-2xl cursor-pointer"><NavLink to="/">PlugNPlay</NavLink></h1>
+        <h1 className="text-2xl cursor-pointer"><NavLink to="/">Plug&Play</NavLink></h1>
       <div className=" items-center justify-center gap-4 text-[#a1a1a1]  hidden md:block md:flex">
         <button className={`w-4 pt-1 cursor-pointer ${darkMode ? "text-white"  : "text-black"}  `} onClick={()=>handleDarkMode(!darkMode)}>
           {
             darkMode ? <MdSunny/>  : <GoSun/>
           }
         </button>
-        <button className={` hover:border-b p-1 ${darkMode ? "text-[#a1a1a1]"  : "text-black"}  transition duration-150 cursor-pointer ${darkMode ? "" : ""}`}>Sign up</button>
+        <button className={` hover:border-b p-1 ${darkMode ? "text-[#a1a1a1]"  : "text-black"}  transition duration-150 cursor-pointer ${darkMode ? "" : ""}`}><NavLink to="/signup">Sign up</NavLink></button>
         <button className={`hover:border-b p-1 ${darkMode ? "text-[#a1a1a1]"  : "text-black"}  cursor-pointer`} ><NavLink to="/login">Log in</NavLink></button>
         <div className={`text-xl p-1 ${darkMode ? "bg-black rounded-2xl"  : "text-black"}  cursor-pointer hover:text-white`}><FaGithub className={`${darkMode ? "text-white" : "text-black"}`}/></div>
       </div>
