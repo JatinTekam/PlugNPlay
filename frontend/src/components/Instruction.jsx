@@ -1,6 +1,11 @@
+import { useContext } from "react";
+import { DarkMode } from "../context/DarkMode";
 import VSCodeIn from "./VSCodeIn";
 
-function Instruction({ darkMode }) {
+function Instruction() {
+
+  const [darkMode]=useContext(DarkMode);
+
   return (
     <div className="w-[70%] flex flex-col gap-20 m-auto mb-10 p-3">
       <div className="flex items-center">
@@ -29,7 +34,7 @@ function Instruction({ darkMode }) {
           <h2>And Done</h2>
           <h2>You Are Good To Go. </h2>
         </div>
-        <div className="relative  w-[500px]">
+        <div className=" hidden relative  md:block  w-[500px]">
           <VSCodeIn />
           <div
             className={`absolute w-50 h-40 top-0 left-0 h-full bg-gradient-to-r ${

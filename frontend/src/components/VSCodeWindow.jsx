@@ -4,7 +4,7 @@ export default function VSCodeWindow({ DemoCodes = {} }) {
  return (
     <div
       style={{
-        width: "300px",
+        width: "350px",
         height: "500px",
         borderRadius: "10px",
         overflow: "hidden",

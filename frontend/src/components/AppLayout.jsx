@@ -4,16 +4,19 @@ import HeroSection from "./HeroSection";
 import Instruction from "./Instruction";
 import FeaturedCards from "./FeaturedCards";
 import LanguageSupport from "./LanguageSupport";
+import { DarkMode } from "../context/DarkMode";
+import { useContext } from "react";
 
-function AppLayout({ handleDarkMode, darkMode }) {
+function AppLayout() {
+   const [darkMode]=useContext(DarkMode);
   return (
     <div className={`app-container ${darkMode ? "bg-black" : "bg-white"}`}>
       
       <main className="main-content">
-        <HeroSection darkMode={darkMode} />
-        <Instruction darkMode={darkMode} />
-        <FeaturedCards darkMode={darkMode} />
-        <LanguageSupport darkMode={darkMode} />
+        <HeroSection/>
+        <Instruction/>
+        <FeaturedCards/>
+        <LanguageSupport/>
         <Outlet />
       </main>
       {/* <Footer /> */}

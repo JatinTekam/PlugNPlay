@@ -2,8 +2,12 @@ import { FaJava } from "react-icons/fa";
 import { IoLogoJavascript } from "react-icons/io5";
 import { SiTypescript } from "react-icons/si";
 import { FaPython } from "react-icons/fa";
+import { DarkMode } from "../context/DarkMode";
+import { useContext } from "react";
 
-function LanguageSupport({darkMode}){
+function LanguageSupport(){
+
+     const [darkMode]=useContext(DarkMode);
 
    return(
    <div className="m-auto w-[70%] h-[160px]">

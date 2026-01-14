@@ -1,6 +1,8 @@
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import { DarkMode } from "../context/DarkMode";
+import { useContext } from "react";
 
 
 const bull = (
@@ -12,7 +14,9 @@ const bull = (
   </Box>
 );
 
-export default function BasicCard({card,darkMode}) {
+export default function BasicCard({card}) {
+
+   const [darkMode]=useContext(DarkMode);
 
   let bgColor= darkMode ? "white" :"rgba(98, 96, 96, 0.2)";
   let color= darkMode ? "white" : "black";

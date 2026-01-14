@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { RxGithubLogo } from "react-icons/rx";
+import { DarkMode } from "../context/DarkMode";
+import { useContext } from "react";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    username: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
+
+   const [darkMode]=useContext(DarkMode);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,8 +18,9 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+    //console.log(password);
+    if (formData.password.trim()=="" || formData.email.trim()=="") {
+      alert("All Field Are Required");
       return;
     }
     console.log("Form Submitted:", formData);
@@ -26,8 +29,8 @@ const Login = () => {
 
   return (
     <div className="flex justify-center h-screen pt-2">
-      <div className="w-full max-w-md p-8 space-y-6 bg-[rgba(256,256,256,0.1)] h-110 mt-10 rounded-xl shadow-lg">
-        <h2 className="text-3xl font-bold text-center text-white">
+      <div className="w-full max-w-md p-8 space-y-6 mx-10 bg-[rgba(256,256,256,0.1)] h-110 mt-10 rounded-xl shadow-2xl">
+        <h2 className={`text-xl sm:text-xl md:text-2xl font-bold text-center ${darkMode ?  "text-white" : "text-black"}`}>
           Log in to Account
         </h2>
         <p className="text-center text-white">
@@ -37,7 +40,7 @@ const Login = () => {
         <form className="space-y-4" onSubmit={handleSubmit}>
 
           <div>
-            <label className="block mb-1 text-sm font-medium text-white">
+            <label className={`block mb-1 text-sm font-medium ${darkMode ?  "text-white" : "text-black"}`}>
               Email Address
             </label>
             <input
@@ -52,7 +55,7 @@ const Login = () => {
           </div>
 
           <div>
-            <label className="block mb-1 text-sm font-medium text-white">
+            <label className={`block mb-1 text-sm font-medium ${darkMode ?  "text-white" : "text-black"}`}>
               Password
             </label>
             <input
@@ -75,7 +78,7 @@ const Login = () => {
           </button>
         </form>
 
-        <p className="text-sm text-center text-white">
+        <p className={`text-sm text-center ${darkMode ?  "text-white" : "text-black"}`}>
           Already have an account ?{" "}
           <a href="/signup" className="text-blue-600 hover:underline">
             Sign up
@@ -83,7 +86,7 @@ const Login = () => {
         </p>
         <div className="w-full flex justify-center gap-5 text-2xl">
             <FcGoogle className="cursor-pointer"/>
-            <RxGithubLogo className="text-white cursor-pointer"/>
+            <RxGithubLogo className={`${darkMode ?  "text-white" : "text-black"} cursor-pointer`}/>
         </div>
       </div>
     </div>

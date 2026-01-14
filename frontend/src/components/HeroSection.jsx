@@ -3,8 +3,12 @@ import VSCodeWindow from "./VSCodeWindow";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { DemoCodes } from "../utils/utils";
 import { NavLink } from "react-router-dom";
+import { DarkMode } from "../context/DarkMode";
+import { useContext } from "react";
 
-function HeroSection({darkMode}) {
+function HeroSection() {
+
+   const [darkMode]=useContext(DarkMode);
 
   return (
     <div className="pt-4 mb-40">
