@@ -1,11 +1,11 @@
 import Editor from "@monaco-editor/react";
 import {DemoCodes} from "../utils/utils"
 
-export default function VSCodeIn() {
+export default function VSCodeIn({code,width}) {
  return (
     <div
       style={{
-        width: "500px",
+        width: `${width ? "62rem" : "500px"}`,
         height: "500px",
         borderRadius: "10px",
         overflow: "hidden",
@@ -31,15 +31,15 @@ export default function VSCodeIn() {
 
         {/* File name */}
         <span style={{ color: "#ccc", marginLeft: "10px", fontSize: "14px" }}>
-          Main.{DemoCodes[0].extension}
+          Main.{ code > 0 ? DemoCodes[code].extension  : DemoCodes[0].extension}
         </span>
       </div>
 
       {/* Monaco Editor */}
       <Editor
         height="100%"
-        defaultLanguage={DemoCodes[0].language}
-        defaultValue={DemoCodes[0].code}
+        defaultLanguage={code > 0 ? DemoCodes[code].language  :  DemoCodes[0].language}
+        defaultValue={ code > 0 ? DemoCodes[code].code  : DemoCodes[0].code}
         theme="vs-dark"
         options={{
           minimap: { enabled: false },

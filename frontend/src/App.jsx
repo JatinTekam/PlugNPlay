@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import Templates from "./pages/Templates";
 import SignUp from "./pages/SignUp";
 import { DarkMode } from "./context/DarkMode";
+import { Profile } from "./pages/Profile";
 
 function App() {
   //const [darkMode, setDarkMode] = useState(true);
@@ -37,6 +38,7 @@ function App() {
           <Route path="/login" element={<Login/>}></Route>
           <Route path="/signup" element={<SignUp/>}></Route>
           <Route path="/templates" element={<Templates/>}></Route>
+          <Route path="/profile" element={<Profile/>}></Route>
       </Routes>
     </div>
   );
