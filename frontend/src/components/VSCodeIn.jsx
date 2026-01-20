@@ -5,7 +5,7 @@ export default function VSCodeIn({code,width}) {
  return (
     <div
       style={{
-        width: `${width ? "62rem" : "500px"}`,
+        width: `${width ? "500px" : "500px"}`,
         height: "500px",
         borderRadius: "10px",
         overflow: "hidden",

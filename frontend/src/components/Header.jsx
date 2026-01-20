@@ -16,7 +16,7 @@ function Header() {
 
   return (
     <div className="w-screen h-20 pt-4">
-      <nav className={`w-[90%] backdrop-blur-lg fixed top-3 z-10 left-80 rounded-xl ${darkMode ? "bg-black/20" : "bg-white/20"} p-3 ${darkMode ? "text-white"  : "text-black"} items-center m-auto   block md:w-[60%] md:mx-auto flex justify-between`}>
+      <nav className={`w-[20rem] sm:w-[30rem]  2xl:w-[60%] backdrop-blur-lg fixed sm:left-12 md:left-50  left-3 2xl:top-3 z-10 2xl:left-80 rounded-xl ${darkMode ? "bg-black/20" : "bg-white/20"} p-3 ${darkMode ? "text-white"  : "text-black"} items-center m-auto   block md:w-[60%] md:mx-auto flex justify-between`}>
         <h1 className="text-2xl cursor-pointer"><NavLink to="/">Plug&Play</NavLink></h1>
       <div className=" items-center justify-center gap-4 text-[#a1a1a1]  hidden md:block md:flex">
         <button className={`w-4 pt-1 cursor-pointer ${darkMode ? "text-white"  : "text-black"}  `} onClick={()=>setDarkMode(!darkMode)}>
