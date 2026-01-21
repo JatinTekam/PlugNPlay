@@ -3,6 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import { RxGithubLogo } from "react-icons/rx";
 import { DarkMode } from "../context/DarkMode";
 import { useContext } from "react";
+import { NavLink } from "react-router-dom";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -80,9 +81,9 @@ const Login = () => {
 
         <p className={`text-sm text-center ${darkMode ?  "text-white" : "text-black"}`}>
           Already have an account ?{" "}
-          <a href="/signup" className="text-blue-600 hover:underline">
+          <NavLink to="/signup" className="text-blue-600 hover:underline">
             Sign up
-          </a>
+          </NavLink>
         </p>
         <div className="w-full flex justify-center gap-5 text-2xl">
             <FcGoogle className="cursor-pointer"/>

@@ -23,7 +23,7 @@ function Templates() {
           <ul className="w-[50%] text-white flex justify-around ">
             <li className={`${darkMode ?"bg-[rgba(256,256,256,0.1)]" : "bg-black" } px-3 py-1 rounded cursor-pointer`}>All</li>
             <li className={`${darkMode ?"bg-[rgba(256,256,256,0.1)]" : "bg-black" } px-3 py-1 rounded cursor-pointer`}>Java</li>
-            <li className={`${darkMode ?"bg-[rgba(256,256,256,0.1)]" : "bg-black" } px-3 py-1 rounded cursor-pointer`}>JavaScript</li>
+            <li className={`${darkMode ?"bg-[rgba(256,256,256,0.1)]" : "bg-black" } px-3 py-1 rounded cursor-pointer`}>Node</li>
             <li className={`${darkMode ?"bg-[rgba(256,256,256,0.1)]" : "bg-black" } px-3 py-1 rounded cursor-pointer`}>Python</li>
             <li className={`${darkMode ?"bg-[rgba(256,256,256,0.1)]" : "bg-black" } px-3 py-1 rounded cursor-pointer`}>TypeScript</li>
           </ul>

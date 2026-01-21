@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { RxGithubLogo } from "react-icons/rx";
 import { DarkMode } from "../context/DarkMode";
+import { NavLink } from "react-router-dom";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -20,7 +21,15 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
+    if(formData.name.trim()===""){
+       alert("Name Should Not Be Empty");
+      return;
+    }
+    else if(formData.password.trim() ==="" || formData.confirmPassword.trim()==="") {
+      alert("Password Should Not Be Empty");
+      return;
+    }
+    else if(formData.password !== formData.confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
@@ -108,9 +117,9 @@ const Signup = () => {
 
         <p className={`text-sm text-center ${darkMode ?  "text-white" : "text-black"}`}>
           Already have an account ?{" "}
-          <a href="/login" className="text-blue-600 hover:underline">
+          <NavLink to="/login" className="text-blue-600 hover:underline">
             Log in
-          </a>
+          </NavLink>
         </p>
         <div className="w-full flex justify-center gap-5 text-2xl">
           <FcGoogle className="cursor-pointer" />

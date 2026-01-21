@@ -13,11 +13,13 @@ import Templates from "./pages/Templates";
 import SignUp from "./pages/SignUp";
 import { DarkMode } from "./context/DarkMode";
 import { Profile } from "./pages/Profile";
+import Home from "./pages/Home";
+import TemplateInfo from "./pages/TemplateInfo";
 
 function App() {
   //const [darkMode, setDarkMode] = useState(true);
 
-   const [darkMode,setDarkMode]=useContext(DarkMode);
+  const [darkMode, setDarkMode] = useContext(DarkMode);
 
   function handleDarkMode() {
     setDarkMode(!darkMode);
@@ -25,20 +27,17 @@ function App() {
   }
 
   return (
-    <div className={`w-screen h-full ${darkMode ? "bg-black"  :"bg-white"}`}>
-     <Header />
+    <div className={`w-screen h-full ${darkMode ? "bg-black" : "bg-white"}`}>
       <Routes>
-        <Route
-          path="/"
-          index
-          element={
-            <AppLayout/>
-          }
-        />
-          <Route path="/login" element={<Login/>}></Route>
-          <Route path="/signup" element={<SignUp/>}></Route>
-          <Route path="/templates" element={<Templates/>}></Route>
-          <Route path="/profile" element={<Profile/>}></Route>
+        <Route path="/" element={<AppLayout />}>
+        <Route index element={<Home/>}/>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/templates" element={<Templates />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/templateinfo" element={<TemplateInfo />} />
+          
+        </Route>
       </Routes>
     </div>
   );
