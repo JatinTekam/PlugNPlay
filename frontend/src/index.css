@@ -6,12 +6,13 @@
   /* background-color: #0A0A0A; */
   font-size: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   /* font-family: 'Times New Roman', Times, serif; */
+  scroll-behavior: smooth;
 }
 
 html,body{
   width: 100vw;
   height: 100vh;
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth; */
 }
 
 .myHighlight {

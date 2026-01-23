@@ -1,11 +1,5 @@
 import "./App.css";
-import Header from "./components/Header";
-import HeroSection from "./components/HeroSection";
-import FeaturedCards from "./components/FeaturedCards";
-import { useContext, useState } from "react";
-import LanguageSupport from "./components/LanguageSupport";
-import PlugAndPlay from "./components/PlugAndPlayCom";
-import Instruction from "./components/Instruction";
+import { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
 import AppLayout from "./components/AppLayout";
 import Login from "./pages/Login";
@@ -15,19 +9,20 @@ import { DarkMode } from "./context/DarkMode";
 import { Profile } from "./pages/Profile";
 import Home from "./pages/Home";
 import TemplateInfo from "./pages/TemplateInfo";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 function App() {
-  //const [darkMode, setDarkMode] = useState(true);
 
   const [darkMode, setDarkMode] = useContext(DarkMode);
+  const queryClient = new QueryClient();
 
-  function handleDarkMode() {
-    setDarkMode(!darkMode);
-    //console.log(darkMode)
-  }
+
+
 
   return (
     <div className={`w-screen h-full ${darkMode ? "bg-black" : "bg-white"}`}>
+      <QueryClientProvider client={queryClient}>
       <Routes>
         <Route path="/" element={<AppLayout />}>
         <Route index element={<Home/>}/>
@@ -39,6 +34,8 @@ function App() {
           
         </Route>
       </Routes>
+      <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </div>
   );
 }
