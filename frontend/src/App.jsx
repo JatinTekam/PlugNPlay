@@ -21,7 +21,7 @@ function App() {
 
 
   return (
-    <div className={`w-screen h-full ${darkMode ? "bg-black" : "bg-white"}`}>
+    <div className={`w-screen  h-full ${darkMode ? "bg-black" : "bg-white"}`}>
       <QueryClientProvider client={queryClient}>
       <Routes>
         <Route path="/" element={<AppLayout />}>

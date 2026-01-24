@@ -16,7 +16,7 @@ function Header() {
 
   return (
     <div className="w-full h-16 sm:h-20 pt-2 sm:pt-4">
-      <nav className={`backdrop-blur-lg fixed top-0 left-1/2 -translate-x-1/2 z-50 h-16 sm:h-20 transition-all duration-300 ${darkMode ? "bg-black/20" : "bg-white/20"} px-4 sm:px-6 md:px-8 py-2 sm:py-3 ${darkMode ? "text-white" : "text-black"} flex justify-between items-center border-b ${darkMode ? "border-white/10" : "border-black/10"}
+      <nav className={`backdrop-blur-lg fixed top-1 left-1/2 -translate-x-1/2 z-50 h-10 sm:h-20 transition-all duration-300 ${darkMode ? "bg-black/20" : "bg-white/20"} px-4 sm:px-6 md:px-8 py-2 sm:py-3 ${darkMode ? "text-white" : "text-black"} flex justify-between items-center border-b ${darkMode ? "border-white/10" : "border-black/10"}
         w-full sm:w-[95%] md:w-[90%] lg:w-[85%] 2xl:w-[75%] max-w-7xl rounded-none sm:rounded-none md:rounded-b-xl
       `}>
         <h1 className="text-lg sm:text-2xl font-semibold cursor-pointer flex-shrink-0"><NavLink to="/">Plug&Play</NavLink></h1>

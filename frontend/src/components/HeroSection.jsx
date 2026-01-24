@@ -36,10 +36,10 @@ function HeroSection() {
         <div className="relative hidden xl:block w-full max-w-xs -mr-32 z-0">
           <VSCodeWindow DemoCodes={DemoCodes[0]}/>
         </div>
-        <div className="relative z-20 w-full max-w-xs sm:max-w-sm md:max-w-md">
+        <div className="relative z-9 w-full max-w-xs sm:max-w-sm md:max-w-md">
           <VSCodeWindow DemoCodes={DemoCodes[1]}/>
         </div>
-        <div className="relative hidden xl:block w-full max-w-xs -ml-32 z-10">
+        <div className="relative hidden xl:block w-full max-w-xs -ml-32 z-8">
           <VSCodeWindow DemoCodes={DemoCodes[2]}/>
         </div>
         <Shadow darkMode={darkMode}/>
