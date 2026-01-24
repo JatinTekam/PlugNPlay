@@ -5,6 +5,9 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
+
+//------------ This Config Service Moved To Service Folder ---------------//
+
 //@Configuration
 //public class CorsConfig implements WebMvcConfigurer {
 //

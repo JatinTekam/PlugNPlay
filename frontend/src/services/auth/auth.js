@@ -1,7 +1,10 @@
 import axios from "axios";
 
 const baseUrl = axios.create({
-  baseURL: "http://localhost:8081",
+  baseURL: import.meta.env.VITE_BASE_URL || "http://localhost:8081/api/v1/auth",
+  headers:{
+    "Content-Type": "application/json"
+  }
 });
 
 export function getUserId() {
@@ -11,12 +14,6 @@ export function getUserId() {
 // Signup API Call
 export async function signUp(data) {
   console.log(data);
-  
-  const res = await baseUrl.post("/api/v1/auth/register", data, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
+  const res = await baseUrl.post("/register", data);
   return res.data;
 }

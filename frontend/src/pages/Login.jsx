@@ -5,7 +5,7 @@ import { DarkMode } from "../context/DarkMode";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getUserId } from "../services/Api/api";
+import { getUserId } from "../services/auth/auth";
 
 const Login = () => {
   const [formData, setFormData] = useState({

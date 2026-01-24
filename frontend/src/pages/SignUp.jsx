@@ -2,10 +2,11 @@ import React, { useContext, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { RxGithubLogo } from "react-icons/rx";
 import { DarkMode } from "../context/DarkMode";
-import { NavLink } from "react-router-dom";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { signUp } from "../services/Api/api";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { signUp } from "../services/auth/auth";
 import toast from "react-hot-toast";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -16,19 +17,20 @@ const Signup = () => {
   });
 
   const [darkMode] = useContext(DarkMode);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData(prve=>({ ...prve, [e.target.name]: e.target.value }));
+    setFormData((prve) => ({ ...prve, [e.target.name]: e.target.value }));
   };
 
   // Mutation for sign up
-  const { mutateAsync, isPending } = useMutation({
+  const { mutateAsync, isLoading } = useMutation({
     mutationFn: signUp,
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     // Check if name field is empty (trim removes whitespace)
     if (formData.name.trim() === "") {
       toast.error("Name Is Required");
@@ -51,14 +53,28 @@ const Signup = () => {
     }
 
     //API call logic
-    console.log("Form Submitted:", formData);
-    toast.success("Account Created Successfully!");
-    // try {
-    //   const res = await mutateAsync(formData);
-    //   console.log(res);
-    // } catch (error) {
-    //   console.log(error.message);
-    // }
+    try {
+      const res = await mutateAsync(formData);
+      console.log(res);
+
+      // Show success message
+      toast.success("Account Created Successfully!");
+
+      // Reset form data
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+
+      // Redirect to login page after successful signup
+      navigate("/login");
+
+    } catch (error) {
+      console.log(error);
+      toast.error(`Account Not Created Due To ${error.message}`);
+    }
   };
 
   return (
@@ -170,9 +186,10 @@ const Signup = () => {
 
           <button
             type="submit"
-            className="w-full py-3 mt-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 active:scale-95 transition duration-200 shadow-lg text-sm sm:text-base"
+            disabled={isLoading}
+            className={`w-full py-3 mt-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 active:scale-95 transition duration-200 shadow-lg text-sm sm:text-base ${isLoading ? 'opacity-80 cursor-not-allowed' : ''}`}
           >
-            Sign Up
+            {isLoading ? <CircularProgress/> : "Sign Up"}
           </button>
         </form>
 
