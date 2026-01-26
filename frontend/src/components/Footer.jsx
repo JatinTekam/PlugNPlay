@@ -8,7 +8,7 @@ function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className={`w-full ${darkMode ? "bg-black text-gray-100" : "bg-gray-100 text-gray-800"} transition-colors duration-300`}>
+    <footer className={`w-full ${darkMode ? "bg-gradient-to-br from-black via-gray-900 to-black" : "bg-gradient-to-br from-white via-gray-50 to-white"} transition-colors duration-300`}>
       <div className="border-t border-gray-300 dark:border-gray-700"></div>
       
       <div className="w-full px-4 sm:px-6 md:px-8 py-10 sm:py-12 md:py-16">

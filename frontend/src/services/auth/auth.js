@@ -7,13 +7,16 @@ const baseUrl = axios.create({
   }
 });
 
-export function getUserId() {
-  return baseUrl.get("/users/1");
-}
 
 // Signup API Call
 export async function signUp(data) {
-  console.log(data);
   const res = await baseUrl.post("/register", data);
+  return res.data;
+}
+
+// Login API Call
+export async function login(data) {
+  console.log(data);
+  const res = await baseUrl.post("/login", data);
   return res.data;
 }

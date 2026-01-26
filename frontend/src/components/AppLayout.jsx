@@ -9,9 +9,9 @@ function AppLayout() {
   const [darkMode] = useContext(DarkMode);
   return (
     <div
-      className={`app-container overflow-x-hidden flex flex-col min-h-screen ${darkMode ? "bg-black" : "bg-white"}`}
+      className={`app-container overflow-x-hidden flex flex-col min-h-screen ${darkMode ? "bg-gradient-to-br from-black via-gray-900 to-black" : "bg-gradient-to-br from-white via-gray-50 to-white"}`}
     >
-      <main className="main-content flex-1">
+      <main className="main-content  flex-1">
         <Header />
         <Outlet />
         <Footer />

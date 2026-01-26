@@ -5,7 +5,6 @@ import { CiMenuBurger } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";
 import { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-// import { DarkMode } from "@mui/icons-material";
 import { DarkMode } from "../context/DarkMode";
 
 function Header() {
@@ -15,8 +14,8 @@ function Header() {
 
 
   return (
-    <div className="w-full h-16 sm:h-20 pt-2 sm:pt-4">
-      <nav className={`backdrop-blur-lg fixed top-1 left-1/2 -translate-x-1/2 z-50 h-10 sm:h-20 transition-all duration-300 ${darkMode ? "bg-black/20" : "bg-white/20"} px-4 sm:px-6 md:px-8 py-2 sm:py-3 ${darkMode ? "text-white" : "text-black"} flex justify-between items-center border-b ${darkMode ? "border-white/10" : "border-black/10"}
+    <div className={`w-full h-16   sm:h-20 pt-2 sm:pt-4`}>
+      <nav className={`backdrop-blur-lg fixed top-1 left-1/2 -translate-x-1/2 z-50 h-10 sm:h-20 transition-all duration-300 ${darkMode ? "" : ""} px-4 sm:px-6 md:px-8 py-2 sm:py-3 ${darkMode ? "text-white" : "text-black"} flex justify-between items-center border-b ${darkMode ? "border-white/10" : "border-black/10"}
         w-full sm:w-[95%] md:w-[90%] lg:w-[85%] 2xl:w-[75%] max-w-7xl rounded-none sm:rounded-none md:rounded-b-xl
       `}>
         <h1 className="text-lg sm:text-2xl font-semibold cursor-pointer flex-shrink-0"><NavLink to="/">Plug&Play</NavLink></h1>
@@ -37,7 +36,7 @@ function Header() {
       </nav>
 
       {/* Mobile Menu */}
-      <div className={`mobile-sideMenu w-full min-h-screen pt-16 sm:pt-20 z-40 flex flex-col gap-1 text-center fixed top-0 left-0 transition-all duration-300 ease-in-out ${mobileMenu ? "block opacity-100" : "hidden opacity-0 pointer-events-none"} ${darkMode ? "bg-black/95" : "bg-gray-50/95"} backdrop-blur-sm border-t ${darkMode ? "border-white/10" : "border-gray-200"}`}>
+      <div className={`mobile-sideMenu w-full min-h-screen pt-16 sm:pt-20 z-40 flex flex-col gap-1 text-center fixed top-0 left-0 transition-all duration-300 ease-in-out ${mobileMenu ? "block " : "hidden opacity-0 pointer-events-none"} $${darkMode ? "bg-gradient-to-br from-black via-gray-900 to-black" : "bg-gradient-to-br from-white via-gray-50 to-white"} backdrop-blur-sm border-t ${darkMode ? "border-white/10" : "border-gray-200"}`}>
         <NavLink to="/signup" className={`py-4 px-4 text-base font-medium transition hover:bg-blue-500/10 border-b ${darkMode ? "text-white border-white/10 hover:text-blue-400" : "text-black border-gray-200 hover:text-blue-600"}`} onClick={()=>setMobileMenu(false)}>Sign up</NavLink>
         <NavLink to="/login" className={`py-4 px-4 text-base font-medium transition hover:bg-blue-500/10 border-b ${darkMode ? "text-white border-white/10 hover:text-blue-400" : "text-black border-gray-200 hover:text-blue-600"}`} onClick={()=>setMobileMenu(false)}>Log in</NavLink>
         <NavLink to="/templates" className={`py-4 px-4 text-base font-medium transition hover:bg-blue-500/10 ${darkMode ? "text-white hover:text-blue-400" : "text-black hover:text-blue-600"}`} onClick={()=>setMobileMenu(false)}>Templates</NavLink>

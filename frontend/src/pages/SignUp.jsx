@@ -29,6 +29,7 @@ const Signup = () => {
   });
 
   const handleSubmit = async (e) => {
+    //Prevent default form submission behavior
     e.preventDefault();
     
     // Check if name field is empty (trim removes whitespace)
@@ -52,7 +53,7 @@ const Signup = () => {
       return;
     }
 
-    //API call logic
+    //SignUp Logic
     try {
       const res = await mutateAsync(formData);
       console.log(res);
@@ -78,8 +79,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-8 py-8">
-      <div className="w-full max-w-md p-6 sm:p-8 space-y-6 bg-[rgba(256,256,256,0.1)] rounded-xl shadow-2xl backdrop-blur-md border border-white/10">
+    <div className={`min-h-screen flex items-center ${darkMode ? "bg-gradient-to-br from-black via-gray-900 to-black" : "bg-gradient-to-br from-white via-gray-50 to-white"} justify-center px-4 sm:px-6 md:px-8 py-8`}>
+      <div className={`w-full max-w-md p-6 sm:p-8 space-y-6 ${darkMode ? "bg-gradient-to-br from-black via-gray-900 to-black" : "bg-gradient-to-br from-white via-gray-50 to-white"}  rounded-xl shadow-2xl backdrop-blur-md border border-white/10`}>
         <div className="text-center space-y-2">
           <h2
             className={`text-2xl sm:text-3xl font-bold ${darkMode ? "text-white" : "text-black"}`}
@@ -177,12 +178,12 @@ const Signup = () => {
             />
           </div>
 
-          <label className="flex items-center gap-2 cursor-pointer text-sm">
+          {/* <label className="flex items-center gap-2 cursor-pointer text-sm">
             <input type="checkbox" className="w-4 h-4 rounded" required />
             <span className={darkMode ? "text-gray-300" : "text-gray-600"}>
               I agree to the Terms and Conditions
             </span>
-          </label>
+          </label> */}
 
           <button
             type="submit"
@@ -210,7 +211,7 @@ const Signup = () => {
 
         <div className="grid grid-cols-2 gap-3">
           <button
-            className={`py-2.5 px-4 rounded-lg font-medium text-sm sm:text-base transition border flex items-center justify-center gap-2 hover:opacity-80 ${
+            className={`py-2.5 px-4 cursor-pointer rounded-lg font-medium text-sm sm:text-base transition border flex items-center justify-center gap-2 hover:opacity-80 ${
               darkMode
                 ? "bg-white/10 border-white/20 text-white hover:bg-white/20"
                 : "bg-gray-100 border-gray-300 text-black hover:bg-gray-200"
@@ -220,7 +221,7 @@ const Signup = () => {
             <span className="hidden sm:inline">Google</span>
           </button>
           <button
-            className={`py-2.5 px-4 rounded-lg font-medium text-sm sm:text-base transition border flex items-center justify-center gap-2 hover:opacity-80 ${
+            className={`py-2.5 px-4 cursor-pointer rounded-lg font-medium text-sm sm:text-base transition border flex items-center justify-center gap-2 hover:opacity-80 ${
               darkMode
                 ? "bg-white/10 border-white/20 text-white hover:bg-white/20"
                 : "bg-gray-100 border-gray-300 text-black hover:bg-gray-200"
@@ -234,7 +235,7 @@ const Signup = () => {
         <p
           className={`text-sm text-center ${darkMode ? "text-gray-300" : "text-gray-600"}`}
         >
-          Already have an account?{" "}
+          Already have an account ? {" "}
           <NavLink
             to="/login"
             className="text-blue-600 hover:text-blue-700 font-semibold transition"
