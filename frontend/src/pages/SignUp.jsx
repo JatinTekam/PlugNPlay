@@ -16,6 +16,8 @@ const Signup = () => {
     confirmPassword: "",
   });
 
+  //const[check,isCheck]=useState(true);
+
   const [darkMode] = useContext(DarkMode);
   const navigate = useNavigate();
 
@@ -24,7 +26,7 @@ const Signup = () => {
   };
 
   // Mutation for sign up
-  const { mutateAsync, isLoading } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     mutationFn: signUp,
   });
 
@@ -178,19 +180,12 @@ const Signup = () => {
             />
           </div>
 
-          {/* <label className="flex items-center gap-2 cursor-pointer text-sm">
-            <input type="checkbox" className="w-4 h-4 rounded" required />
-            <span className={darkMode ? "text-gray-300" : "text-gray-600"}>
-              I agree to the Terms and Conditions
-            </span>
-          </label> */}
-
           <button
             type="submit"
-            disabled={isLoading}
-            className={`w-full py-3 mt-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 active:scale-95 transition duration-200 shadow-lg text-sm sm:text-base ${isLoading ? 'opacity-80 cursor-not-allowed' : ''}`}
+            //disabled={isLoading}
+            className={`w-full py-3 mt-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 active:scale-95 transition duration-200 shadow-lg text-sm sm:text-base ${isPending ? 'opacity-80 cursor-not-allowed' : ''}`}
           >
-            {isLoading ? <CircularProgress/> : "Sign Up"}
+            {isPending ? <CircularProgress color="inherit" size={25} /> : "Sign Up"}
           </button>
         </form>
 

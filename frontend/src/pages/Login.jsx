@@ -3,10 +3,11 @@ import { FcGoogle } from "react-icons/fc";
 import { RxGithubLogo } from "react-icons/rx";
 import { DarkMode } from "../context/DarkMode";
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../services/auth/auth";
 import CircularProgress from "@mui/material/CircularProgress";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,8 @@ const Login = () => {
     password: "",
   });
   const [darkMode] = useContext(DarkMode);
+
+  const navigate = useNavigate();
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: login,
@@ -29,14 +32,31 @@ const Login = () => {
 
     // Check if email or password fields are empty after trimming whitespace
     if (formData.password.trim() === "" || formData.email.trim() === "") {
-      alert("All Field Are Required");
+      toast.error("Email and Password Should Not Be Empty");
       return;
     }
     console.log("Form Submitted:", formData);
 
     // Login Logic
-    const res = await mutateAsync(formData);
-    console.log(res);
+    try {
+      const res = await mutateAsync(formData);
+      toast.success("Login Successful");
+      navigate("/profile");
+      console.log(res);
+    } catch (error) {
+
+      if(error?.code==="ERR_NETWORK"){
+      console.error("Login Error:", error?.code);
+      toast.error("Network Error: Please check your internet connection.");
+      }else if(error?.response?.status >= 500){
+        toast.error("Backend Server is Down. Please try again later.");
+      }else if(!error?.response){
+        console.error("Backend Connection Error:", error?.message);
+        toast.error("Cannot reach backend server. Please check if the server is running.");
+      }else{
+        toast.error(error?.response?.data?.message || "Login Failed");
+      }
+    }
   };
 
   return (
@@ -98,27 +118,12 @@ const Login = () => {
             />
           </div>
 
-          {/* <div className="flex items-center justify-between text-sm">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" className="w-4 h-4 rounded" />
-              <span className={darkMode ? "text-gray-300" : "text-gray-600"}>
-                Remember me
-              </span>
-            </label>
-            <a
-              href="#"
-              className="text-blue-500 hover:text-blue-600 font-medium transition"
-            >
-              Forgot password?
-            </a>
-          </div> */}
-
           <button
             type="submit"
-            //disabled={isLoading}
-            className="w-full py-3 mt-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 active:scale-95 transition duration-200 shadow-lg text-sm sm:text-base"
+            disabled={isPending}
+            className={`w-full py-3 mt-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 active:scale-95 transition duration-200 shadow-lg text-sm sm:text-base`}
           >
-            {isPending ? <CircularProgress/>  :"Log in"}
+            {isPending ? <CircularProgress color="inherit" size={25}/> :"Log in"}
           </button>
         </form>
 

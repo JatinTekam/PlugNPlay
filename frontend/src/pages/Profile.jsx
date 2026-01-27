@@ -22,7 +22,7 @@ export const Profile = () => {
               tekamjatin@gmail.com
             </p>
           </div>
-          <button className={`px-6 sm:px-8 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 text-white bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 shadow-lg hover:shadow-xl`}>
+          <button className={`px-6 sm:px-8 py-3 cursor-pointer rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 text-white bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 shadow-lg hover:shadow-xl`}>
             Logout
           </button>
         </div>

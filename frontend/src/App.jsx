@@ -29,7 +29,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/templates" element={<Templates />} />
+
           <Route path="/profile" element={<Profile />} />
+          
           <Route path="/templateinfo" element={<TemplateInfo />} />
           
         </Route>
