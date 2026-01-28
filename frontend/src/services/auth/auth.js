@@ -16,7 +16,8 @@ export async function signUp(data) {
 
 // Login API Call
 export async function login(data) {
-  //console.log(data);
-  const res = await baseUrl.post("/login", data);
+  const res = await baseUrl.post("/login", data,{
+    withCredentials:true
+  });
   return res.data;
 }

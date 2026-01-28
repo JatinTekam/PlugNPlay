@@ -183,7 +183,7 @@ const Signup = () => {
           <button
             type="submit"
             //disabled={isLoading}
-            className={`w-full py-3 mt-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 active:scale-95 transition duration-200 shadow-lg text-sm sm:text-base ${isPending ? 'opacity-80 cursor-not-allowed' : ''}`}
+            className={`w-full py-3 mt-2 cursor-pointer font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 active:scale-95 transition duration-200 shadow-lg text-sm sm:text-base ${isPending ? 'opacity-80 cursor-not-allowed' : ''}`}
           >
             {isPending ? <CircularProgress color="inherit" size={25} /> : "Sign Up"}
           </button>

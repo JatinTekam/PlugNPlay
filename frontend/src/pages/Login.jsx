@@ -8,6 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import { login } from "../services/auth/auth";
 import CircularProgress from "@mui/material/CircularProgress";
 import toast from "react-hot-toast";
+import useAuth from "../services/auth/store";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -17,6 +18,9 @@ const Login = () => {
   const [darkMode] = useContext(DarkMode);
 
   const navigate = useNavigate();
+
+  const loginFn=useAuth(state=>state.login);
+
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: login,
@@ -39,10 +43,11 @@ const Login = () => {
 
     // Login Logic
     try {
-      const res = await mutateAsync(formData);
+      //const res = await mutateAsync(formData);
+      await loginFn(formData);
       toast.success("Login Successful");
       navigate("/profile");
-      console.log(res);
+      //console.log(res);
     } catch (error) {
 
       if(error?.code==="ERR_NETWORK"){
@@ -121,7 +126,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={isPending}
-            className={`w-full py-3 mt-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 active:scale-95 transition duration-200 shadow-lg text-sm sm:text-base`}
+            className={`w-full py-3 mt-2 font-semibold text-white bg-blue-600 cursor-pointer rounded-lg hover:bg-blue-700 active:scale-95 transition duration-200 shadow-lg text-sm sm:text-base`}
           >
             {isPending ? <CircularProgress color="inherit" size={25}/> :"Log in"}
           </button>

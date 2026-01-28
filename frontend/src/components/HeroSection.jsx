@@ -42,7 +42,7 @@ function HeroSection() {
         <div className="relative hidden xl:block w-full max-w-xs -ml-32 z-8">
           <VSCodeWindow DemoCodes={DemoCodes[2]}/>
         </div>
-        <Shadow darkMode={darkMode}/>
+        {/* <Shadow darkMode={darkMode}/> */}
       </div>
     </div>
   );
