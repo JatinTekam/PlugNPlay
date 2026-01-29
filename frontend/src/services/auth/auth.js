@@ -21,3 +21,12 @@ export async function login(data) {
   });
   return res.data;
 }
+
+
+// Logout API Call
+export async function logout() {
+  const res = await baseUrl.post("/logout",{},{
+    withCredentials:true
+  });
+  return res.data;
+}

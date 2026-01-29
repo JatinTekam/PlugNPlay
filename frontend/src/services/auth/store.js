@@ -1,33 +1,74 @@
 import { create } from "zustand";
-import { login } from "./auth";
+import { login, logout } from "./auth";
+import { persist } from "zustand/middleware";
 
 const AUTH_STORAGE_KEY = "auth_app";
 
-const isAuthenticated = false;
+const useAuth = create(
+  persist(
+    (set, get) => ({
+      accessToken: null,
+      user: null,
+      authStatus: false,
+      authLoading: false,
+      login: async (loginData) => {
+        console.log("Started Login.....");
+        set({ authLoading: true });
 
-const useAuth = create((set) => ({
-  accessToken: null,
-  user: null,
-  authStatus: false,
-  authLoading: false,
-  login: async (loginData) => {
-    console.log("Started Login.....");
-    set({ authLoading: true });
+        try {
+          const loginResponse = await login(loginData);
+          console.log("Login Response:", loginResponse);
+          set({
+            accessToken: loginResponse?.accessToken,
+            user: loginResponse?.user,
+            authStatus: true,
+          });
 
-    try {
-      const loginResponse = await login(loginData);
-      console.log("Login Response:", loginResponse);
-      set({
-        accessToken: loginResponse?.accessToken,
-        user: loginResponse?.user,
-        authStatus: true,
-      });
-    } catch (error) {
-        console.error("Login Error in Store:", error);
-        throw error;
-    }
-  },
-  logout: (slient) => {},
-}));
+          return loginResponse;
+        } catch (error) {
+          console.error("Login Error in Store:", error);
+          throw error;
+        } finally {
+          set({
+            authLoading: false,
+          });
+        }
+      },
+      logout: async (slient = false) => {
+        try {
+          //   if(!slient){
+          //     await logout();
+          //}
+          set({
+            authLoading: true,
+          });
+          await logout();
+        } catch (error) {
+        } finally {
+          set({
+            authLoading: false,
+          });
+        }
+        //await logout();
+        set({
+          accessToken: null,
+          user: null,
+          authStatus: false,
+          authLoading: false,
+        });
+      },
+      checkLogin: () => {
+        if (get().accessToken && get().authStatus) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+    }),
+    {
+      name: AUTH_STORAGE_KEY,
+    },
+  ),
+);
 
 export default useAuth;

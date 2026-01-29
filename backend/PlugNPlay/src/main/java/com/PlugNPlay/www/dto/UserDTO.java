@@ -9,7 +9,7 @@ public class UserDTO {
     private String name;
     private String email;
     private String password;
-    private boolean enable=false;
+    private boolean enable=true;
     private List<CodeSnippest> codeSnippests=new ArrayList<>();
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;

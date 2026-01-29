@@ -39,7 +39,6 @@ const Login = () => {
       toast.error("Email and Password Should Not Be Empty");
       return;
     }
-    console.log("Form Submitted:", formData);
 
     // Login Logic
     try {
@@ -47,7 +46,7 @@ const Login = () => {
       await loginFn(formData);
       toast.success("Login Successful");
       navigate("/profile");
-      //console.log(res);
+      //console.log(userInfo);
     } catch (error) {
 
       if(error?.code==="ERR_NETWORK"){

@@ -3,10 +3,14 @@ import { CiBookmark } from "react-icons/ci";
 import codeImg from "../utils/images/codeImg.jpg";
 import { DarkMode } from "../context/DarkMode";
 import { Link, NavLink } from "react-router-dom";
+import useAuth from "../services/auth/store";
 
 export const Profile = () => {
 
   const [darkMode]=useContext(DarkMode);
+
+  const user= useAuth((state) => state.user);
+  const logout= useAuth((state) => state.logout);
 
   return (
     <section className={`w-full min-h-screen transition-colors duration-300 ${darkMode ? "bg-gradient-to-br from-black via-gray-900 to-black" : "bg-gradient-to-br from-white via-gray-50 to-white"}`}>
@@ -16,13 +20,13 @@ export const Profile = () => {
           <div>
             <h1 className={`text-lg sm:text-xl mb-2 transition-colors ${darkMode ? "text-gray-400" : "text-gray-600"}`}>Hello 👋,</h1>
             <h1 className={`text-3xl sm:text-4xl md:text-5xl font-bold mb-3 transition-colors ${darkMode ? "text-white" : "text-gray-900"}`}>
-              Jatin Tekam
+              {user?.name || "User"}
             </h1>
             <p className={`text-sm sm:text-base transition-colors ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
-              tekamjatin@gmail.com
+              {user?.email || "No Email Provided"}
             </p>
           </div>
-          <button className={`px-6 sm:px-8 py-3 cursor-pointer rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 text-white bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 shadow-lg hover:shadow-xl`}>
+          <button className={`px-6 sm:px-8 py-3 cursor-pointer rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 text-white bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 shadow-lg hover:shadow-xl`} onClick={()=>logout()}>
             Logout
           </button>
         </div>
@@ -51,7 +55,7 @@ export const Profile = () => {
               <div>
                 <h3 className={`text-lg sm:text-xl font-bold mb-3 transition-colors group-hover:text-red-500 ${darkMode ? "text-white" : "text-gray-900"}`}>Java Configuration File</h3>
                 <div className="space-y-2">
-                  <p className={`text-sm transition-colors ${darkMode ? "text-gray-400" : "text-gray-600"}`}><span className="font-semibold">Created By:</span> Jatin Tekam</p>
+                  <p className={`text-sm transition-colors ${darkMode ? "text-gray-400" : "text-gray-600"}`}><span className="font-semibold">Created By:</span> {user?.email || user.name}</p>
                   <p className={`text-sm transition-colors ${darkMode ? "text-gray-400" : "text-gray-600"}`}><span className="font-semibold">Total Files:</span> 0</p>
                 </div>
               </div>

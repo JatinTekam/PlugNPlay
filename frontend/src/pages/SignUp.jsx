@@ -76,7 +76,7 @@ const Signup = () => {
 
     } catch (error) {
       console.log(error);
-      toast.error(`Account Not Created Due To ${error.message}`);
+      toast.error(`Account Not Created Due To ${error?.response?.data?.message || error.message}`);
     }
   };
 
