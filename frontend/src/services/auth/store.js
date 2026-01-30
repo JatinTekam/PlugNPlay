@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { login, logout } from "./auth";
+import { login, logout as logoutApi } from "./auth";
 import { persist } from "zustand/middleware";
 
 const AUTH_STORAGE_KEY = "auth_app";
@@ -12,12 +12,10 @@ const useAuth = create(
       authStatus: false,
       authLoading: false,
       login: async (loginData) => {
-        console.log("Started Login.....");
         set({ authLoading: true });
 
         try {
           const loginResponse = await login(loginData);
-          console.log("Login Response:", loginResponse);
           set({
             accessToken: loginResponse?.accessToken,
             user: loginResponse?.user,
@@ -26,7 +24,6 @@ const useAuth = create(
 
           return loginResponse;
         } catch (error) {
-          console.error("Login Error in Store:", error);
           throw error;
         } finally {
           set({
@@ -34,15 +31,12 @@ const useAuth = create(
           });
         }
       },
-      logout: async (slient = false) => {
+      logout: async () => {
         try {
-          //   if(!slient){
-          //     await logout();
-          //}
           set({
             authLoading: true,
           });
-          await logout();
+          await logoutApi();
         } catch (error) {
         } finally {
           set({

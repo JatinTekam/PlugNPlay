@@ -45,17 +45,14 @@ const Login = () => {
       //const res = await mutateAsync(formData);
       await loginFn(formData);
       toast.success("Login Successful");
-      navigate("/profile");
-      //console.log(userInfo);
+      navigate("/user/profile");
     } catch (error) {
 
       if(error?.code==="ERR_NETWORK"){
-      console.error("Login Error:", error?.code);
       toast.error("Network Error: Please check your internet connection.");
       }else if(error?.response?.status >= 500){
         toast.error("Backend Server is Down. Please try again later.");
       }else if(!error?.response){
-        console.error("Backend Connection Error:", error?.message);
         toast.error("Cannot reach backend server. Please check if the server is running.");
       }else{
         toast.error(error?.response?.data?.message || "Login Failed");

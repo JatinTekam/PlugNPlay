@@ -14,8 +14,7 @@ function Header() {
   const [darkMode, setDarkMode] = useContext(DarkMode);
 
   const checkLoginStatus = useAuth((state) => state.checkLogin);
-  const user= useAuth((state) => state.user);
-  
+  const user = useAuth((state) => state.user);
 
   return (
     <div className={`w-full h-16   sm:h-20 pt-2 sm:pt-4`}>
@@ -35,9 +34,14 @@ function Header() {
             {darkMode ? <MdSunny /> : <GoSun />}
           </button>
           {checkLoginStatus() ? (
-            <>
-            <h3 className="text-white">{user?.email || user?.name}</h3>
-            </>
+            <div className="flex gap-3">
+              <NavLink to="templates">
+                <h3 className="text-white">Find My Template</h3>
+              </NavLink>
+              <NavLink to="/user/profile">
+                <h3 className="text-white">{user?.email || user?.name}</h3>
+              </NavLink>
+            </div>
           ) : (
             <>
               <button

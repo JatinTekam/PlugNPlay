@@ -57,8 +57,8 @@ const Signup = () => {
 
     //SignUp Logic
     try {
-      const res = await mutateAsync(formData);
-      console.log(res);
+
+     await mutateAsync(formData);
 
       // Show success message
       toast.success("Account Created Successfully!");
@@ -75,7 +75,6 @@ const Signup = () => {
       navigate("/login");
 
     } catch (error) {
-      console.log(error);
       toast.error(`Account Not Created Due To ${error?.response?.data?.message || error.message}`);
     }
   };
