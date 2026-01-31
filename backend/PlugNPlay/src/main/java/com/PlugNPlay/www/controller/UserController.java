@@ -1,4 +1,7 @@
 package com.PlugNPlay.www.controller;
+import com.PlugNPlay.www.dto.CodeDto;
+import com.PlugNPlay.www.dto.CodeSnippestDto;
+import com.PlugNPlay.www.dto.CodeSnippestResponse;
 import com.PlugNPlay.www.dto.UserDTO;
 import com.PlugNPlay.www.exceptions.ResourceNotFoundException;
 import com.PlugNPlay.www.service.UserService;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+
 
     @Autowired
     public UserController(UserService userService) {
@@ -58,6 +62,14 @@ public class UserController {
     public ResponseEntity<UserDTO> getUserById(@PathVariable String userId){
         return ResponseEntity.ok(userService.getUserById(userId));
     }
+
+    @PostMapping("/code")
+    public ResponseEntity<CodeSnippestResponse> saveCode(@RequestBody CodeSnippestDto codeSnippestDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUserCode(codeSnippestDto));
+    }
+
+
+
 
 
 

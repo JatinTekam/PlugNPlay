@@ -1,4 +1,6 @@
 package com.PlugNPlay.www.service;
+import com.PlugNPlay.www.dto.CodeSnippestDto;
+import com.PlugNPlay.www.dto.CodeSnippestResponse;
 import com.PlugNPlay.www.dto.UserDTO;
 
 
@@ -24,6 +26,9 @@ public interface UserService {
 
     //Get All Users
     Iterable<UserDTO> getAllUsers();
+
+    //Save User Code
+    CodeSnippestResponse saveUserCode(CodeSnippestDto codeSnippestDto);
 
 
 }

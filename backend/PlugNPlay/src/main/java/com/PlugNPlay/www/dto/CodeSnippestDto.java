@@ -1,39 +1,34 @@
-package com.PlugNPlay.www.entity;
+package com.PlugNPlay.www.dto;
 
-import com.PlugNPlay.www.dto.CodeDto;
-import jakarta.persistence.*;
-import lombok.*;
+import com.PlugNPlay.www.entity.Code;
+import com.PlugNPlay.www.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
-public class CodeSnippest {
+public class CodeSnippestDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String description;
     private String language;
     private String name;
+    private UUID userId;
+    private List<CodeDto> codeFiles=new ArrayList<>();
 
+    public UUID getUserId() {
+        return userId;
+    }
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private User user;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
+    }
 
-
-    @OneToMany(mappedBy = "codeSnippest",
-                cascade = CascadeType.ALL,
-                orphanRemoval = true)
-    private List<Code> codeFiles=new ArrayList<>();
-
-    public List<Code> getCodeFiles() {
+    public List<CodeDto> getCodeFiles() {
         return codeFiles;
     }
 
-    public void setCodeFiles(List<Code> codeFiles) {
+    public void setCodeFiles(List<CodeDto> codeFiles) {
         this.codeFiles = codeFiles;
     }
 
@@ -69,11 +64,7 @@ public class CodeSnippest {
         this.name = name;
     }
 
-    public User getUser() {
-        return user;
-    }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+
+
 }
