@@ -50,7 +50,7 @@ public class SecurityConfig {
                 .sessionManagement(sm->
                         sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeHttpRequests ->
-                authorizeHttpRequests.requestMatchers("/api/v1/auth/**","/v3/api-docs/**","/swagger-ui.html","/swagger-ui/**","/api/v1/user/code").permitAll()
+                authorizeHttpRequests.requestMatchers("/api/v1/auth/**","/v3/api-docs/**","/swagger-ui.html","/swagger-ui/**","/api/v1/user/**","/api/v1/user/snippest/{id}").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2->

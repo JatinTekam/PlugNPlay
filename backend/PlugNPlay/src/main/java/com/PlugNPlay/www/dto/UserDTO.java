@@ -10,7 +10,8 @@ public class UserDTO {
     private String email;
     private String password;
     private boolean enable=true;
-    private List<CodeSnippest> codeSnippests=new ArrayList<>();
+   // private List<CodeSnippest> codeSnippests=new ArrayList<>();
+    private List<CodeSnippestDto> codeSnippests=new ArrayList<>();
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
     private Provider provider=Provider.LOCAL;
@@ -56,13 +57,6 @@ public class UserDTO {
         this.enable = enable;
     }
 
-    public List<CodeSnippest> getCodeSnippests() {
-        return codeSnippests;
-    }
-
-    public void setCodeSnippests(List<CodeSnippest> codeSnippests) {
-        this.codeSnippests = codeSnippests;
-    }
 
     public LocalDateTime getCreatedTime() {
         return createdTime;
@@ -94,5 +88,13 @@ public class UserDTO {
 
     public void setRoles(Set<RoleDto> roles) {
         this.roles = roles;
+    }
+
+    public List<CodeSnippestDto> getCodeSnippests() {
+        return codeSnippests;
+    }
+
+    public void setCodeSnippests(List<CodeSnippestDto> codeSnippests) {
+        this.codeSnippests = codeSnippests;
     }
 }

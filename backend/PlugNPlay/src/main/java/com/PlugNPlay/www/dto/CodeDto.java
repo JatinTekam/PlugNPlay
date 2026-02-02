@@ -1,10 +1,21 @@
 package com.PlugNPlay.www.dto;
 
+import java.util.UUID;
+
 public class CodeDto {
 
+    private UUID id;
     private String name;
     private String content;
     private String extension;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

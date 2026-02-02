@@ -126,6 +126,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(codeSnippestDto.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
 
+
         //Create snippet
         CodeSnippest snippest=new CodeSnippest();
         snippest.setName(codeSnippestDto.getName());
@@ -161,6 +162,7 @@ public class UserServiceImpl implements UserService {
                 .stream()
                 .map(code -> {
                     CodeDto dto = new CodeDto();
+                    dto.setId(code.getId());
                     dto.setName(code.getName());
                     dto.setContent(code.getContent());
                     dto.setExtension(code.getExtension());

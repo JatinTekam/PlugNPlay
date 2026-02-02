@@ -4,12 +4,15 @@ import com.PlugNPlay.www.dto.CodeSnippestDto;
 import com.PlugNPlay.www.dto.CodeSnippestResponse;
 import com.PlugNPlay.www.dto.UserDTO;
 import com.PlugNPlay.www.exceptions.ResourceNotFoundException;
+import com.PlugNPlay.www.repository.CodeRepo;
 import com.PlugNPlay.www.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 
 @RestController
@@ -18,11 +21,13 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final CodeRepo codeRepo;
 
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, CodeRepo codeRepo) {
         this.userService = userService;
+        this.codeRepo = codeRepo;
     }
 
 
@@ -66,6 +71,13 @@ public class UserController {
     @PostMapping("/code")
     public ResponseEntity<CodeSnippestResponse> saveCode(@RequestBody CodeSnippestDto codeSnippestDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUserCode(codeSnippestDto));
+    }
+
+    @PostMapping("/snippest/{id}")
+    public ResponseEntity<?> getSnippest(@PathVariable UUID id){
+
+        System.out.println(id);
+        return ResponseEntity.ok(codeRepo.getCodeSnippestById(id));
     }
 
 
