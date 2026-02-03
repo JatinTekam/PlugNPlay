@@ -8,6 +8,7 @@ import com.PlugNPlay.www.service.JWTService;
 import io.jsonwebtoken.*;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,7 +29,6 @@ import java.util.stream.Collectors;
 @Service
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-
     private final JWTService jwtService;
     private final UserRepository userRepository;
 
@@ -37,55 +37,77 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.userRepository = userRepository;
     }
 
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        String header=request.getHeader("Authorization");
-        if(header!=null && header.startsWith("Bearer ")){
+        String token = null;
 
-            String token = header.substring(7);
+        // First, try to get token from Authorization header
+        String header = request.getHeader("Authorization");
+        if (header != null && header.startsWith("Bearer ")) {
+            token = header.substring(7);
+            System.out.println("Token from header: " + token);
+        }
 
-            try{
+        // If not in header, try to get from cookies
+        if (token == null && request.getCookies() != null) {
+            System.out.println("Looking for token in cookies...");
+            for (Cookie cookie : request.getCookies()) {
+                System.out.println("Cookie found: " + cookie.getName());
 
-                if(!jwtService.isAccessToken(token)){
-                    filterChain.doFilter(request,response);
-                    return;
+                if ("refreshToken".equals(cookie.getName())) {
+                    token = cookie.getValue();
+                    System.out.println("Token found in refreshToken cookie");
+                    break;
                 }
+            }
+        }
+
+        // If token is found, authenticate
+        if (token != null) {
+            try {
+                // Comment out this check for now since we're using refreshToken
+                // if (!jwtService.isAccessToken(token)) {
+                //     filterChain.doFilter(request, response);
+                //     return;
+                // }
 
                 Jws<Claims> parse = jwtService.parse(token);
                 Claims payload = parse.getPayload();
                 String userId = payload.getSubject();
-                UUID userUUID= UUID.fromString(userId);
-                User user = userRepository.findById(userUUID).orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
+                UUID userUUID = UUID.fromString(userId);
+                User user = userRepository.findById(userUUID)
+                        .orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
 
-                if(user.isEnable()){
-                    List<GrantedAuthority> authorities = user.getRoles()==null ? List.of() : user.getRoles().stream()
-                            .map(role->new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+                if (user.isEnable()) {
+                    List<GrantedAuthority> authorities = user.getRoles() == null ? List.of()
+                            : user.getRoles().stream()
+                            .map(role -> new SimpleGrantedAuthority(role.getName()))
+                            .collect(Collectors.toList());
 
-                    UsernamePasswordAuthenticationToken authentication=new UsernamePasswordAuthenticationToken(
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                             user.getEmail(),
                             null,
                             authorities
                     );
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    if(SecurityContextHolder.getContext().getAuthentication()==null){
+                    if (SecurityContextHolder.getContext().getAuthentication() == null) {
                         SecurityContextHolder.getContext().setAuthentication(authentication);
+                        System.out.println("User authenticated: " + user.getEmail());
                     }
                 }
 
             } catch (ExpiredJwtException e) {
-                request.setAttribute("error","Token Expired");
-                //e.printStackTrace();
+                request.setAttribute("error", "Token Expired");
+                System.out.println("Token expired");
             } catch (Exception e) {
-                request.setAttribute("error","Invalid Token");
-                //e.printStackTrace();
+                request.setAttribute("error", "Invalid Token");
+                System.out.println("Invalid token: " + e.getMessage());
             }
         }
 
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
-
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {

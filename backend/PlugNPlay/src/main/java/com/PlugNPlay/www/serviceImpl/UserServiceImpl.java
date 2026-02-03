@@ -15,6 +15,8 @@ import com.PlugNPlay.www.service.UserService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -119,12 +121,14 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(user,UserDTO.class);
     }
 
+
+
     @Override
     public CodeSnippestResponse saveUserCode(CodeSnippestDto codeSnippestDto){
 
-        // Fetch user
-        User user = userRepository.findById(codeSnippestDto.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
+        // Fetch user From SecurityContextHolder
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(auth.getName()).orElseThrow();
 
 
         //Create snippet
@@ -175,6 +179,14 @@ public class UserServiceImpl implements UserService {
         return codeSnippestResponse;
     }
 
+
+
+
+
+
+
+
+
     @Override
     public Iterable<UserDTO> getAllUsers() {
         return userRepository
@@ -184,4 +196,6 @@ public class UserServiceImpl implements UserService {
                 modelMapper.map(user,UserDTO.class)
                 ).toList();
     }
+
+
 }

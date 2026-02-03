@@ -50,7 +50,7 @@ public class SecurityConfig {
                 .sessionManagement(sm->
                         sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeHttpRequests ->
-                authorizeHttpRequests.requestMatchers("/api/v1/auth/**","/v3/api-docs/**","/swagger-ui.html","/swagger-ui/**","/api/v1/user/**","/api/v1/user/snippest/{id}").permitAll()
+                authorizeHttpRequests.requestMatchers("/api/v1/auth/**","/v3/api-docs/**","/swagger-ui.html","/swagger-ui/**","/api/v1/user/snippest/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2->
@@ -97,7 +97,7 @@ public class SecurityConfig {
         var config=new CorsConfiguration();
 
         config.setAllowedOrigins(List.of(FRONTEND_URL));
-        config.setAllowedMethods(List.of("GET","POST","PATCH","PUT","DELETE","OPTION"));
+        config.setAllowedMethods(List.of("GET","POST","PATCH","PUT","DELETE","OPTIONS"));
         config.setAllowedHeaders(List.of("Authorization","Content-Type","X-CSRF-TOKEN","Accept"));
         config.setAllowCredentials(true);
 

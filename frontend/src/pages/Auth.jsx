@@ -4,7 +4,7 @@ import { Navigate, Outlet } from 'react-router-dom'
 const Auth = ({status}) => {
   return (
     <div>
-      {status ? <Navigate to="/user/profile" /> : <Outlet />}
+      {status ? <Navigate to="/profile" /> : <Outlet />}
     </div>
   )
 }

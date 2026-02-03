@@ -35,11 +35,12 @@ function App() {
             </Route>
 
             <Route path="/templates" element={<Templates />} />
-            <Route path="/templateinfo" element={<TemplateInfo />} />
-            <Route path="/addtemplate" element={<AddTemplate />} />
+            <Route path="/templateinfo/:id" element={<TemplateInfo />} />
+            {/* <Route path="/addtemplate" element={<AddTemplate />} /> */}
 
-            <Route path="/user" element={<Dashboard status={loginStatus} />}>
-              <Route path="profile" element={<Profile />} />
+            <Route path="/" element={<Dashboard status={loginStatus} />}>
+              <Route path="/profile" element={<Profile />} />
+            <Route path="/addtemplate" element={<AddTemplate />} />
             </Route>
           </Route>
         </Routes>

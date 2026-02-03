@@ -1,55 +1,70 @@
-import React, { useState, useContext } from 'react'
-import { useLocation } from 'react-router-dom'
+import React, { useState, useContext, useEffect } from 'react'
+import { useLocation, useParams } from 'react-router-dom'
 import { DarkMode } from '../context/DarkMode'
 import { FiCopy, FiDownload } from 'react-icons/fi'
+import useAuth from '../services/auth/store'
 
 const TemplateInfo = () => {
-  const { state } = useLocation()
   const [darkMode] = useContext(DarkMode)
   const [copiedId, setCopiedId] = useState(null)
+  const [code,setCode]=useState([]);
+  const [codeSnippests,setCodeSinppest]=useState([]);
 
-  const template = state?.template || {
-    id: 1,
-    name: 'Java Configuration Template',
-    description: 'A complete Java project configuration template with Spring Boot setup',
-    language: 'Java',
-    author: 'Jatin Tekam',
-    createdAt: '2024-01-15',
-    downloads: 245,
-    files: [
-      {
-        id: 1,
-        name: 'application.properties',
-        extension: 'properties',
-        code: `spring.application.name=my-app
-spring.datasource.url=jdbc:mysql://localhost:3306/db_name
-spring.datasource.username=root
-spring.datasource.password=password
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-server.port=8081`
-      },
-      {
-        id: 2,
-        name: 'pom.xml',
-        extension: 'xml',
-        code: `<project>
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.example</groupId>
-  <artifactId>my-app</artifactId>
-  <version>1.0-SNAPSHOT</version>
+   const template1=useAuth(state=>state.templates);
+   const paramId=useParams();
+
+   useEffect(()=>{
+    const temp=template1.find(t=>t.id.toString()===paramId.id);
+    setCode(temp);
+    setCodeSinppest(temp.codeFiles);
+   },[])
+
+   useEffect(()=>{
+    console.log(template1);
+   },[])
+
+//   const template = state?.template || {
+//     id: 1,
+//     name: 'Java Configuration Template',
+//     description: 'A complete Java project configuration template with Spring Boot setup',
+//     language: 'Java',
+//     author: 'Jatin Tekam',
+//     createdAt: '2024-01-15',
+//     downloads: 245,
+//     files: [
+//       {
+//         id: 1,
+//         name: 'application.properties',
+//         extension: 'properties',
+//         code: `spring.application.name=my-app
+// spring.datasource.url=jdbc:mysql://localhost:3306/db_name
+// spring.datasource.username=root
+// spring.datasource.password=password
+// spring.jpa.hibernate.ddl-auto=update
+// spring.jpa.show-sql=true
+// server.port=8081`
+//       },
+//       {
+//         id: 2,
+//         name: 'pom.xml',
+//         extension: 'xml',
+//         code: `<project>
+//   <modelVersion>4.0.0</modelVersion>
+//   <groupId>com.example</groupId>
+//   <artifactId>my-app</artifactId>
+//   <version>1.0-SNAPSHOT</version>
   
-  <dependencies>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-      <version>3.0.0</version>
-    </dependency>
-  </dependencies>
-</project>`
-      }
-    ]
-  }
+//   <dependencies>
+//     <dependency>
+//       <groupId>org.springframework.boot</groupId>
+//       <artifactId>spring-boot-starter-web</artifactId>
+//       <version>3.0.0</version>
+//     </dependency>
+//   </dependencies>
+// </project>`
+//       }
+//     ]
+//   }
 
   const copyToClipboard = (code, id) => {
     navigator.clipboard.writeText(code)
@@ -64,41 +79,41 @@ server.port=8081`
         {/* Header Section */}
         <div className={`mb-8 sm:mb-12 pb-8 border-b ${darkMode ? 'border-gray-800' : 'border-gray-200'}`}>
           <h1 className={`text-3xl sm:text-4xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-            {template.name}
+            {code?.name}
           </h1>
           <p className={`text-sm sm:text-base mb-4 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-            {template.description}
+            {code?.description}
           </p>
           
           <div className="flex flex-wrap gap-4 items-center text-xs sm:text-sm mt-6">
             <div className={`px-3 py-1 rounded-full ${darkMode ? 'bg-gray-800 text-gray-300' : 'bg-gray-200 text-gray-700'}`}>
-              {template.language}
+              {code?.language}
             </div>
-            <span className={darkMode ? 'text-gray-400' : 'text-gray-600'}>
+            {/* <span className={darkMode ? 'text-gray-400' : 'text-gray-600'}>
               By <strong>{template.author}</strong>
-            </span>
-            <span className={darkMode ? 'text-gray-400' : 'text-gray-600'}>
+            </span> */}
+            {/* <span className={darkMode ? 'text-gray-400' : 'text-gray-600'}>
               {new Date(template.createdAt).toLocaleDateString('en-US', { 
                 year: 'numeric', 
                 month: 'short', 
                 day: 'numeric' 
               })}
-            </span>
-            <span className={`flex items-center gap-1 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+            </span> */}
+            {/* <span className={`flex items-center gap-1 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
               <FiDownload className="w-4 h-4" />
               {template.downloads} downloads
-            </span>
+            </span> */}
           </div>
         </div>
 
         {/* Files Section */}
         <div>
-          <h2 className={`text-xl sm:text-2xl font-semibold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-            Files ({template.files.length})
-          </h2>
+          {/* <h2 className={`text-xl sm:text-2xl font-semibold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+            Files ({code?.length})
+          </h2> */}
           
           <div className="space-y-4 sm:space-y-6">
-            {template.files.map((file) => (
+            {codeSnippests && codeSnippests?.map((file) => (
               <div
                 key={file.id}
                 className={`rounded-lg overflow-hidden border transition-all duration-200 ${
@@ -120,8 +135,8 @@ server.port=8081`
                     </p>
                   </div>
                   <button
-                    onClick={() => copyToClipboard(file.code, file.id)}
-                    className={`ml-2 sm:ml-4 px-3 sm:px-4 py-2 rounded-md flex items-center gap-2 text-xs sm:text-sm font-medium transition-all duration-200 ${
+                    onClick={() => copyToClipboard(file.content, file.id)}
+                    className={`ml-2 sm:ml-4 px-3 sm:px-4 cursor-pointer py-2 rounded-md flex items-center gap-2 text-xs sm:text-sm font-medium transition-all duration-200 ${
                       copiedId === file.id
                         ? darkMode
                           ? 'bg-green-900 text-green-200'
@@ -131,13 +146,13 @@ server.port=8081`
                         : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                     }`}
                   >
-                    <FiCopy className="w-4 h-4" />
+                     <FiCopy className="w-4 h-4" />
                     <span className="hidden sm:inline">
                       {copiedId === file.id ? 'Copied!' : 'Copy'}
                     </span>
                     <span className="sm:hidden">
                       {copiedId === file.id ? '✓' : 'Copy'}
-                    </span>
+                    </span> 
                   </button>
                 </div>
 
@@ -146,7 +161,7 @@ server.port=8081`
                   darkMode ? 'bg-gray-950' : 'bg-gray-50'
                 }`}>
                   <pre className={`${darkMode ? 'text-gray-300' : 'text-gray-700'} whitespace-pre-wrap word-break`}>
-                    <code>{file.code}</code>
+                    <code>{file.content}</code>
                   </pre>
                 </div>
               </div>
@@ -156,14 +171,14 @@ server.port=8081`
 
         {/* Action Buttons */}
         <div className="mt-8 sm:mt-12 flex flex-col sm:flex-row gap-3 sm:gap-4">
-          <button className={`flex-1 px-6 py-3 rounded-lg font-semibold text-sm sm:text-base transition-all duration-200 ${
+          <button className={`flex-1 px-6 py-3 cursor-pointer rounded-lg font-semibold text-sm sm:text-base transition-all duration-200 ${
             darkMode
               ? 'bg-blue-600 text-white hover:bg-blue-700'
               : 'bg-blue-500 text-white hover:bg-blue-600'
           }`}>
             Download Template
           </button>
-          <button className={`flex-1 px-6 py-3 rounded-lg font-semibold text-sm sm:text-base transition-all duration-200 ${
+          <button className={`flex-1 px-6 py-3 cursor-pointer rounded-lg font-semibold text-sm sm:text-base transition-all duration-200 ${
             darkMode
               ? 'border border-gray-700 text-gray-300 hover:bg-gray-800'
               : 'border border-gray-300 text-gray-700 hover:bg-gray-50'

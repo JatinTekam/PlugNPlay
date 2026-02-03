@@ -2,20 +2,21 @@ import React, { useState, useContext } from 'react'
 import { DarkMode } from '../context/DarkMode'
 import { FiPlus, FiTrash2 } from 'react-icons/fi'
 import toast from 'react-hot-toast'
+import { useMutation } from '@tanstack/react-query'
+import { addTemplate } from '../services/user/user'
+import CircularProgress from '@mui/material/CircularProgress'
 
 const AddTemplate = () => {
   const [darkMode] = useContext(DarkMode)
   const [formData, setFormData] = useState({
-    username:"",
     name: '',
     description: '',
-    language: 'JavaScript',
-    files: [
+    language: '',
+    codeFiles: [
       {
-        id: 1,
         name: '',
         extension: 'js',
-        code: ''
+        content: ''
       }
     ]
   })
@@ -55,6 +56,10 @@ const AddTemplate = () => {
     SQL: 'sql'
   }
 
+   const { mutateAsync, isPending } = useMutation({
+      mutationFn: addTemplate,
+    });
+
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({
@@ -64,43 +69,41 @@ const AddTemplate = () => {
     
   }
 
-  const handleFileChange = (id, field, value) => {
+  const handleFileChange = (index, field, value) => {
     setFormData(prev => ({
       ...prev,
-      files: prev.files.map(file =>
-        file.id === id ? { ...file, [field]: value } : file
+      codeFiles: prev.codeFiles.map((file, i) =>
+        i === index ? { ...file, [field]: value } : file
       )
     }))
   }
 
   const addFile = () => {
-    const newId = Math.max(...formData.files.map(f => f.id), 0) + 1
     setFormData(prev => ({
       ...prev,
-      files: [
-        ...prev.files,
+      codeFiles: [
+        ...prev.codeFiles,
         {
-          id: newId,
           name: '',
           extension: extensionMap[formData.language] || 'txt',
-          code: ''
+          content: ''
         }
       ]
     }))
   }
 
-  const removeFile = (id) => {
-    if (formData.files.length === 1) {
-      setSubmitError('You must have at least one file')
+  const removeFile = (index) => {
+    if (formData.codeFiles.length === 1) {
+      toast.error('You must have at least one file')
       return
     }
     setFormData(prev => ({
       ...prev,
-      files: prev.files.filter(file => file.id !== id)
+      codeFiles: prev.codeFiles.filter((_, i) => i !== index)
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setSubmitError('')
     setSubmitSuccess(false)
@@ -116,8 +119,8 @@ const AddTemplate = () => {
       return
     }
 
-    const invalidFiles = formData.files.some(
-      file => !file.name.trim() || !file.code.trim()
+    const invalidFiles = formData.codeFiles.some(
+      file => !file.name.trim() || !file.content.trim()
     )
 
     if (invalidFiles) {
@@ -125,17 +128,15 @@ const AddTemplate = () => {
       return
     }
 
-    // Submit logic
-    console.log('Template data:', formData)
-    setSubmitSuccess(true)
-    setTimeout(() => setSubmitSuccess(false), 3000)
+  
+    try {
+      const response = await mutateAsync(formData);
+      toast.success('Template created successfully!');
+      console.log('Template created:', response);
+    } catch (error) {
+      toast.error('Failed to create template');
+    }
 
-    // TODO: Send to backend
-    // const response = await fetch('/api/templates', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(formData)
-    // })
   }
 
   return (
@@ -152,7 +153,7 @@ const AddTemplate = () => {
           </p>
         </div>
 
-        {/* Error/Success Messages */}
+        {/* Error/Success Messages
         {submitError && (
           <div className={`mb-6 p-4 rounded-lg text-sm sm:text-base ${
             darkMode
@@ -171,7 +172,7 @@ const AddTemplate = () => {
           }`}>
             ✓ Template created successfully!
           </div>
-        )}
+        )} */}
 
         <form onSubmit={handleSubmit} className="space-y-8 sm:space-y-10">
 
@@ -256,9 +257,9 @@ const AddTemplate = () => {
             </div>
 
             <div className="space-y-6 sm:space-y-8">
-              {formData.files.map((file, index) => (
+              {formData.codeFiles.map((file, index) => (
                 <div
-                  key={file.id}
+                  key={index}
                   className={`rounded-lg border p-4 sm:p-6 transition-all duration-200 ${
                     darkMode
                       ? 'border-gray-700 bg-gray-900'
@@ -272,10 +273,10 @@ const AddTemplate = () => {
                         File {index + 1}
                       </h3>
                     </div>
-                    {formData.files.length > 1 && (
+                    {formData.codeFiles.length > 1 && (
                       <button
                         type="button"
-                        onClick={() => removeFile(file.id)}
+                        onClick={() => removeFile(index)}
                         className={`p-2 rounded-lg transition-all duration-200 ${
                           darkMode
                             ? 'text-red-400 hover:bg-gray-800'
@@ -296,7 +297,7 @@ const AddTemplate = () => {
                       <input
                         type="text"
                         value={file.name}
-                        onChange={(e) => handleFileChange(file.id, 'name', e.target.value)}
+                        onChange={(e) => handleFileChange(index, 'name', e.target.value)}
                         placeholder="e.g., index.js"
                         className={`w-full px-3 py-2 rounded-lg text-xs sm:text-sm transition-all duration-200 ${
                           darkMode
@@ -312,8 +313,8 @@ const AddTemplate = () => {
                       <input
                         name='extension'
                         type="text"
-                        value={file.extension}
-                        onChange={(e) => handleFileChange(file.id, 'extension', e.target.value)}
+                        value={file.extension.toLocaleLowerCase()}
+                        onChange={(e) => handleFileChange(index, 'extension', e.target.value)}
                         placeholder="js"
                         className={`w-full px-3 py-2 rounded-lg text-xs sm:text-sm transition-all duration-200 ${
                           darkMode
@@ -330,8 +331,8 @@ const AddTemplate = () => {
                       Code Content *
                     </label>
                     <textarea
-                      value={file.code}
-                      onChange={(e) => handleFileChange(file.id, 'code', e.target.value)}
+                      value={file.content}
+                      onChange={(e) => handleFileChange(index, 'content', e.target.value)}
                       placeholder="Paste your code here..."
                       rows="10"
                       className={`w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg font-mono text-xs sm:text-sm transition-all duration-200 resize-none ${
@@ -350,17 +351,17 @@ const AddTemplate = () => {
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-8 border-t" style={{borderTopColor: darkMode ? '#374151' : '#e5e7eb'}}>
             <button
               type="submit"
-              className={`flex-1 px-6 py-3 rounded-lg font-semibold text-sm sm:text-base transition-all duration-200 ${
+              className={`flex-1 px-6 py-3 rounded-lg font-semibold cursor-pointer text-sm sm:text-base transition-all duration-200 ${
                 darkMode
                   ? 'bg-blue-600 text-white hover:bg-blue-700'
                   : 'bg-blue-500 text-white hover:bg-blue-600'
               }`}
             >
-              Create Template
+             {isPending ? <CircularProgress color="inherit" size={25} /> : "Create Template"}
             </button>
             <button
               type="button"
-              className={`flex-1 px-6 py-3 rounded-lg font-semibold text-sm sm:text-base transition-all duration-200 ${
+              className={`flex-1 px-6 py-3 rounded-lg font-semibold cursor-pointer text-sm sm:text-base transition-all duration-200 ${
                 darkMode
                   ? 'border border-gray-700 text-gray-300 hover:bg-gray-800'
                   : 'border border-gray-300 text-gray-700 hover:bg-gray-50'

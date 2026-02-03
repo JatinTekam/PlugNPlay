@@ -9,6 +9,15 @@ public class CodeDto {
     private String content;
     private String extension;
 
+    public CodeDto() {}
+
+    public CodeDto(UUID id, String name, String content, String extension) {
+        this.id = id;
+        this.name = name;
+        this.content = content;
+        this.extension = extension;
+    }
+
     public UUID getId() {
         return id;
     }

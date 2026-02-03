@@ -1,6 +1,6 @@
 import { FaJava } from "react-icons/fa";
 import { IoLogoJavascript } from "react-icons/io5";
-import { SiTypescript } from "react-icons/si";
+import { SiTypescript, SiCplusplus, SiDotnet, SiPhp, SiRuby, SiGo, SiRust} from "react-icons/si";
 import { FaPython } from "react-icons/fa";
 import { DarkMode } from "../context/DarkMode";
 import { useContext } from "react";
@@ -13,7 +13,13 @@ function LanguageSupport(){
     { Icon: FaJava, label: "Java", color: "text-orange-600" },
     { Icon: IoLogoJavascript, label: "JavaScript", color: "text-yellow-600" },
     { Icon: SiTypescript, label: "TypeScript", color: "text-blue-700" },
-    { Icon: FaPython, label: "Python", color: "text-blue-600" }
+    { Icon: FaPython, label: "Python", color: "text-blue-600" },
+    { Icon: SiCplusplus, label: "C++", color: "text-blue-600" },
+    { Icon: SiDotnet, label: ".Net", color: "text-purple-500" },
+    { Icon: SiPhp, label: "PHP", color: "text-blue-400" },
+    { Icon: SiRuby, label: "Ruby", color: "text-red-600" },
+    { Icon: SiGo, label: "Go", color: "text-blue-600" }
+    //{ Icon: SiRust, label: "Rust", color: "text-orange-600" }
   ];
 
   return (
