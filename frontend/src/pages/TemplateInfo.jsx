@@ -20,9 +20,7 @@ const TemplateInfo = () => {
     setCodeSinppest(temp.codeFiles);
    },[])
 
-   useEffect(()=>{
-    console.log(template1);
-   },[])
+
 
 //   const template = state?.template || {
 //     id: 1,
@@ -107,6 +105,7 @@ const TemplateInfo = () => {
               By <strong>{code?.username}</strong>
             </span>
              <span className={darkMode ? 'text-gray-400' : 'text-gray-600'}>
+              Created At{' '}
               {new Date(code?.createdAt).toLocaleDateString('en-US', { 
                 year: 'numeric', 
                 month: 'short', 

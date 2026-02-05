@@ -6,6 +6,7 @@ import { DarkMode } from "../context/DarkMode";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../services/auth/store";
 import { getCurrentUser } from "../services/user/user";
+import toast from "react-hot-toast";
 
 export const Profile = () => {
   const [darkMode] = useContext(DarkMode);
@@ -17,29 +18,17 @@ export const Profile = () => {
   const codes = useAuth((state) => state.codes);
 
   // Edit mode state
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [editData, setEditData] = useState({
-    name: user?.name || "",
-    email: user?.email || "",
-  });
+
   const [sortBy, setSortBy] = useState("newest");
 
-  useEffect(() => {
-    setEditData({
-      name: user?.name || "",
-      email: user?.email || "",
-    });
-  }, [user]);
-
-  async function handleGetUser(){
+  async function handleGetUser() {
     try {
       const userData = await getCurrentUser(user?.email);
-      console.log(userData);
     } catch (error) {
-      console.log("Error fetching user data:", error);
+      toast.error("Error fetching user data:", error.message);
     }
   }
- 
+
   const sortedTemplates = [...(codeSnippests || [])].sort((a, b) => {
     if (sortBy === "newest") return b.id - a.id;
     if (sortBy === "oldest") return a.id - b.id;
@@ -69,42 +58,40 @@ export const Profile = () => {
         <div
           className={`flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-12 pb-8 border-b transition-colors ${darkMode ? "border-gray-700" : "border-gray-200"}`}
         >
-          
-            <div>
-              <h1
-                className={`text-lg sm:text-xl mb-2 transition-colors ${darkMode ? "text-gray-400" : "text-gray-600"}`}
-              >
-                Hello 👋,
-              </h1>
-              <h1
-                className={`text-3xl sm:text-4xl md:text-5xl font-bold mb-3 transition-colors ${darkMode ? "text-white" : "text-gray-900"}`}
-              >
-                {user?.name || "User"}
-              </h1>
-              <p
-                className={`text-sm sm:text-base transition-colors ${darkMode ? "text-gray-400" : "text-gray-600"}`}
-              >
-                {user?.email || "No Email Provided"}
-              </p>
-            </div>
-        
+          <div>
+            <h1
+              className={`text-lg sm:text-xl mb-2 transition-colors ${darkMode ? "text-gray-400" : "text-gray-600"}`}
+            >
+              Hello 👋,
+            </h1>
+            <h1
+              className={`text-3xl sm:text-4xl md:text-5xl font-bold mb-3 transition-colors ${darkMode ? "text-white" : "text-gray-900"}`}
+            >
+              {user?.name || "User"}
+            </h1>
+            <p
+              className={`text-sm sm:text-base transition-colors ${darkMode ? "text-gray-400" : "text-gray-600"}`}
+            >
+              {user?.email || "No Email Provided"}
+            </p>
+          </div>
 
           <div className="flex gap-3 flex-shrink-0">
-              <>
-                <button
-                  onClick={() => handleGetUser()}
-                  className={`px-6 sm:px-8 py-3 cursor-pointer rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center gap-2 text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 shadow-lg hover:shadow-xl`}
-                >
-                  <FiEdit2 className="w-4 h-4" />
-                  Edit Profile
-                </button>
-                <button
-                  className={`px-6 sm:px-8 py-3 cursor-pointer rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 text-white bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 shadow-lg hover:shadow-xl`}
-                  onClick={() => logout()}
-                >
-                  Logout
-                </button>
-              </>
+            <>
+              <button
+                onClick={() => handleGetUser()}
+                className={`px-6 sm:px-8 py-3 cursor-pointer rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center gap-2 text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 shadow-lg hover:shadow-xl`}
+              >
+                <FiEdit2 className="w-4 h-4" />
+                Edit Profile
+              </button>
+              <button
+                className={`px-6 sm:px-8 py-3 cursor-pointer rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 text-white bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 shadow-lg hover:shadow-xl`}
+                onClick={() => logout()}
+              >
+                Logout
+              </button>
+            </>
           </div>
         </div>
 
@@ -187,15 +174,19 @@ export const Profile = () => {
                               <span className="font-semibold">Created By:</span>{" "}
                               {user?.name || user?.email}
                             </p>
-                            <p
-                              className={`text-sm transition-colors flex items-center gap-2 ${darkMode ? "text-gray-400" : "text-gray-600"}`}
+                             <span
+                              className={`text-sm ${darkMode ? "text-gray-400" : "text-gray-600"}`}
                             >
-                              <CiFolderOn className="w-4 h-4" />
-                              <span className="font-semibold">
-                                Total Files: {codes.length}
-                              </span>
-                             
-                            </p>
+                              Created At{": "}
+                              {new Date(snippests?.createdAt).toLocaleDateString(
+                                "en-US",
+                                {
+                                  year: "numeric",
+                                  month: "short",
+                                  day: "numeric",
+                                },
+                              )}
+                            </span> 
                           </div>
                         </div>
                         <div className="mt-4 pt-4 border-t border-opacity-20 flex items-center justify-between">

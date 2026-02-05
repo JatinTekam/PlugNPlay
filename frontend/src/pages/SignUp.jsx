@@ -51,7 +51,7 @@ const Signup = () => {
 
     // Check if password and confirm password values match
     else if (formData.password !== formData.confirmPassword) {
-      toast.error("Passwords Do Not Match!");
+      toast.error("Passwords Should Match!");
       return;
     }
 

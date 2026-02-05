@@ -6,11 +6,6 @@ import LanguageSupport from '../components/LanguageSupport'
 import { getCurrentUser } from '../services/user/user'
 
 const Home = () => {
-
-  // useEffect(async () => {
-  //  const data=await getCurrentUser("tekamjatin@gmail.com");
-  //   console.log(data);
-  // },[])
   return (
      <section className="main-content">
         <HeroSection/>

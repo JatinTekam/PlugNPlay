@@ -15,6 +15,7 @@ const useAuth = create(
       snippests:[],
       codes:[],
       templates:[],
+      
 
       //Login function
       login: async (loginData) => {
@@ -86,6 +87,14 @@ const useAuth = create(
         } else {
           return false;
         }
+      },
+
+      changeLocalLoginData:(accessToken,user,authStatus)=>{
+        set({
+          accessToken,
+          user,
+          authStatus,
+        })
       },
     }),
     {

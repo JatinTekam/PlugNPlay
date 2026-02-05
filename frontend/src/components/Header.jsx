@@ -36,11 +36,7 @@ function Header() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    console.log("Search for:", searchQuery);
-    // Implement search functionality
-  };
+
 
   return (
     <div className={`w-full h-16   sm:h-20 pt-2 sm:pt-4`}>

@@ -6,14 +6,17 @@ import { useMutation } from "@tanstack/react-query";
 import { addTemplate } from "../services/user/user";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../services/auth/store";
 
 const AddTemplate = () => {
   const [darkMode] = useContext(DarkMode);
   const navigate = useNavigate();
+  const username=useAuth(state=>state.user?.name || state.user?.email);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     language: "",
+    username,
     codeFiles: [
       {
         name: "",
@@ -83,7 +86,7 @@ const AddTemplate = () => {
         ...prev.codeFiles,
         {
           name: "",
-          extension: extensionMap[formData.language] || "txt",
+          extension: extensionMap[formData.language] || "js",
           content: "",
         },
       ],
@@ -103,8 +106,6 @@ const AddTemplate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitError("");
-    setSubmitSuccess(false);
 
     // Validation
     if (!formData.name.trim()) {
@@ -277,7 +278,7 @@ const AddTemplate = () => {
               <button
                 type="button"
                 onClick={addFile}
-                className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 ${
+                className={`flex items-center cursor-pointer gap-2 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 ${
                   darkMode
                     ? "bg-gray-800 text-blue-400 border border-gray-700 hover:bg-gray-700"
                     : "bg-gray-100 text-blue-600 border border-gray-300 hover:bg-gray-200"
@@ -312,7 +313,7 @@ const AddTemplate = () => {
                       <button
                         type="button"
                         onClick={() => removeFile(index)}
-                        className={`p-2 rounded-lg transition-all duration-200 ${
+                        className={`p-2 cursor-pointer rounded-lg transition-all duration-200 ${
                           darkMode
                             ? "text-red-400 hover:bg-gray-800"
                             : "text-red-600 hover:bg-red-50"

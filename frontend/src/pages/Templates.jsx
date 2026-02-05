@@ -13,22 +13,12 @@ function Templates() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [bookmarkedTemplates, setBookmarkedTemplates] = useState(new Set());
 
+  const template = useAuth((state) => state.templates);
+  const allTemplates = useAuth((state) => state.allTemplates);
 
-  const template=useAuth(state=>state.templates);
-  const allTemplates=useAuth(state=>state.allTemplates);
-
-
-
-   useEffect(()=>{
-     allTemplates();
-  },[]);
-
-  useEffect(()=>{
-    console.log("Templates updated:", template);
-  },[template]);
-
-
- 
+  useEffect(() => {
+    allTemplates();
+  }, []);
 
   // Mock templates data
   // const mockTemplates = [
@@ -66,7 +56,19 @@ function Templates() {
   //   },
   // ];
 
-  const categories = ["All", "Java", "Node", "Python","JavaScript", "TypeScript","C++",".Net","Go","Ruby","PHP"];
+  const categories = [
+    "All",
+    "Java",
+    "Node",
+    "Python",
+    "JavaScript",
+    "TypeScript",
+    "C++",
+    ".Net",
+    "Go",
+    "Ruby",
+    "PHP",
+  ];
 
   const filteredTemplates = (template || []).filter((template) => {
     const matchesCategory =
@@ -123,7 +125,8 @@ function Templates() {
               darkMode ? "text-gray-400" : "text-gray-600"
             }`}
           >
-            Think. Build. Repeat. — Explore curated code templates for every project.
+            Think. Build. Repeat. — Explore curated code templates for every
+            project.
           </p>
         </div>
 
@@ -154,8 +157,8 @@ function Templates() {
                       ? "bg-red-600 text-white shadow-lg"
                       : "bg-red-600 text-white shadow-lg"
                     : darkMode
-                    ? "bg-gray-800 text-gray-300 hover:bg-gray-700"
-                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      ? "bg-gray-800 text-gray-300 hover:bg-gray-700"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                 }`}
               >
                 {category}
@@ -205,12 +208,12 @@ function Templates() {
                     >
                       {template.description}
                     </p>
-                     <p
+                    <p
                       className={`text-sm mb-2 transition-colors ${
                         darkMode ? "text-gray-300" : "text-gray-700"
                       }`}
                     >
-                     Category:- {template.language}
+                      Category:- {template.language}
                     </p>
                     <div className="space-y-2">
                       <p
@@ -221,8 +224,23 @@ function Templates() {
                         <span className="font-semibold">Created By:</span>{" "}
                         {template.username}
                       </p>
+                        <span
+                          className={`text-sm
+                           ${darkMode ? "text-gray-400" : "text-gray-600"}
+                          `}
+                        >
+                          Created At{": "}
+                          {new Date(template?.createdAt).toLocaleDateString(
+                            "en-US",
+                            {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            },
+                          )}
+                        </span>
                       <p
-                        className={`text-sm flex items-center gap-1 transition-colors ${
+                        className={`text-sm flex mt-2 items-center gap-1 transition-colors ${
                           darkMode ? "text-gray-400" : "text-gray-600"
                         }`}
                       >
