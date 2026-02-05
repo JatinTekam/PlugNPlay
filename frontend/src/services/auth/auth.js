@@ -1,11 +1,14 @@
 import axios from "axios";
 
+
 const baseUrl = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL || "http://localhost:8081/api/v1/auth",
   headers:{
     "Content-Type": "application/json"
   }
 });
+
+
 
 
 // Signup API Call

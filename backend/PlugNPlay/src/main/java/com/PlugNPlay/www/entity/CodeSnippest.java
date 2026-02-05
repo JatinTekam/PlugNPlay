@@ -20,6 +20,7 @@ public class CodeSnippest {
     private String description;
     private String language;
     private String name;
+    private String username;
 
 
     @ManyToOne
@@ -36,6 +37,22 @@ public class CodeSnippest {
                 cascade = CascadeType.ALL,
                 orphanRemoval = true)
     private List<Code> codeFiles=new ArrayList<>();
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 
     public List<Code> getCodeFiles() {
         return codeFiles;

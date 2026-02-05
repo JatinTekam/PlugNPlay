@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation, useParams, useNavigate } from 'react-router-dom'
 import { DarkMode } from '../context/DarkMode'
-import { FiCopy, FiDownload } from 'react-icons/fi'
+import { FiCopy, FiDownload, FiArrowLeft } from 'react-icons/fi'
 import useAuth from '../services/auth/store'
 
 const TemplateInfo = () => {
   const [darkMode] = useContext(DarkMode)
+  const navigate = useNavigate()
   const [copiedId, setCopiedId] = useState(null)
   const [code,setCode]=useState([]);
   const [codeSnippests,setCodeSinppest]=useState([]);
@@ -76,6 +77,19 @@ const TemplateInfo = () => {
     <div className={`w-full min-h-screen ${darkMode ? 'bg-gray-950' : 'bg-gray-50'} transition-colors duration-200`}>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         
+        {/* Back Button */}
+        <button
+          onClick={() => navigate(-1)}
+          className={`mb-6 p-2 rounded-lg cursor-pointer transition-all duration-200 transform hover:scale-110 active:scale-95 flex items-center gap-2 font-semibold ${
+            darkMode
+              ? "text-gray-400 hover:bg-gray-800 hover:text-white"
+              : "text-gray-600 hover:bg-gray-200 hover:text-black"
+          }`}
+        >
+          <FiArrowLeft className="w-5 h-5" />
+          <span>Back</span>
+        </button>
+
         {/* Header Section */}
         <div className={`mb-8 sm:mb-12 pb-8 border-b ${darkMode ? 'border-gray-800' : 'border-gray-200'}`}>
           <h1 className={`text-3xl sm:text-4xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
@@ -89,16 +103,16 @@ const TemplateInfo = () => {
             <div className={`px-3 py-1 rounded-full ${darkMode ? 'bg-gray-800 text-gray-300' : 'bg-gray-200 text-gray-700'}`}>
               {code?.language}
             </div>
-            {/* <span className={darkMode ? 'text-gray-400' : 'text-gray-600'}>
-              By <strong>{template.author}</strong>
-            </span> */}
-            {/* <span className={darkMode ? 'text-gray-400' : 'text-gray-600'}>
-              {new Date(template.createdAt).toLocaleDateString('en-US', { 
+            <span className={darkMode ? 'text-gray-400' : 'text-gray-600'}>
+              By <strong>{code?.username}</strong>
+            </span>
+             <span className={darkMode ? 'text-gray-400' : 'text-gray-600'}>
+              {new Date(code?.createdAt).toLocaleDateString('en-US', { 
                 year: 'numeric', 
                 month: 'short', 
                 day: 'numeric' 
               })}
-            </span> */}
+            </span>
             {/* <span className={`flex items-center gap-1 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
               <FiDownload className="w-4 h-4" />
               {template.downloads} downloads

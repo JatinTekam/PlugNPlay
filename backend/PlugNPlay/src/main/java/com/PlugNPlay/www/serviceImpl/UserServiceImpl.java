@@ -1,11 +1,6 @@
 package com.PlugNPlay.www.serviceImpl;
 
-import com.PlugNPlay.www.dto.CodeDto;
-import com.PlugNPlay.www.dto.CodeSnippestDto;
-import com.PlugNPlay.www.dto.CodeSnippestResponse;
 import com.PlugNPlay.www.dto.UserDTO;
-import com.PlugNPlay.www.entity.Code;
-import com.PlugNPlay.www.entity.CodeSnippest;
 import com.PlugNPlay.www.entity.User;
 import com.PlugNPlay.www.enums.Provider;
 import com.PlugNPlay.www.exceptions.ResourceNotFoundException;
@@ -15,13 +10,8 @@ import com.PlugNPlay.www.service.UserService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 
@@ -30,13 +20,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-    private final CodeSnippestRepository codeSnippestRepository;
+
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, CodeSnippestRepository codeSnippestRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
-        this.codeSnippestRepository = codeSnippestRepository;
     }
 
 
@@ -73,11 +62,11 @@ public class UserServiceImpl implements UserService {
     //Get User By Email
     @Override
     public UserDTO getUserByEmail(String email) {
-
         User user = userRepository
                 .findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User Not Found With Given Email"));
 
+        user.setPassword(null);
         return modelMapper.map(user,UserDTO.class);
 
     }
@@ -118,74 +107,9 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(uid)
                 .orElseThrow(() -> new ResourceNotFoundException("User Not Found With Given Id"));
 
+        user.setPassword(null);
         return modelMapper.map(user,UserDTO.class);
     }
-
-
-
-    @Override
-    public CodeSnippestResponse saveUserCode(CodeSnippestDto codeSnippestDto){
-
-        // Fetch user From SecurityContextHolder
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(auth.getName()).orElseThrow();
-
-
-        //Create snippet
-        CodeSnippest snippest=new CodeSnippest();
-        snippest.setName(codeSnippestDto.getName());
-        snippest.setDescription(codeSnippestDto.getDescription());
-        snippest.setLanguage(codeSnippestDto.getLanguage());
-        snippest.setUser(user);
-
-        //Map code files
-        List<Code> codes=new ArrayList<>();
-
-        for(CodeDto codeDto: codeSnippestDto.getCodeFiles()){
-            Code code=new Code();
-            code.setName(codeDto.getName());
-            code.setContent(codeDto.getContent());
-            code.setExtension(codeDto.getExtension());
-
-            code.setCodeSnippest(snippest);
-            codes.add(code);
-        }
-
-        snippest.setCodeFiles(codes);
-
-        CodeSnippest save = codeSnippestRepository.save(snippest);
-
-        CodeSnippestResponse codeSnippestResponse=new CodeSnippestResponse();
-
-        codeSnippestResponse.setId(save.getId());
-        codeSnippestResponse.setName(save.getName());
-        codeSnippestResponse.setDescription(save.getDescription());
-        codeSnippestResponse.setLanguage(save.getLanguage());
-
-        List<CodeDto> codeDtos = save.getCodeFiles()
-                .stream()
-                .map(code -> {
-                    CodeDto dto = new CodeDto();
-                    dto.setId(code.getId());
-                    dto.setName(code.getName());
-                    dto.setContent(code.getContent());
-                    dto.setExtension(code.getExtension());
-                    return dto;
-                })
-                .toList();
-
-        codeSnippestResponse.setCodeFiles(codeDtos);
-
-        return codeSnippestResponse;
-    }
-
-
-
-
-
-
-
-
 
     @Override
     public Iterable<UserDTO> getAllUsers() {

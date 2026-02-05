@@ -46,18 +46,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String header = request.getHeader("Authorization");
         if (header != null && header.startsWith("Bearer ")) {
             token = header.substring(7);
-            System.out.println("Token from header: " + token);
+           // System.out.println("Token from header: " + token);
         }
 
         // If not in header, try to get from cookies
         if (token == null && request.getCookies() != null) {
-            System.out.println("Looking for token in cookies...");
+          //  System.out.println("Looking for token in cookies...");
             for (Cookie cookie : request.getCookies()) {
-                System.out.println("Cookie found: " + cookie.getName());
+                //System.out.println("Cookie found: " + cookie.getName());
 
                 if ("refreshToken".equals(cookie.getName())) {
                     token = cookie.getValue();
-                    System.out.println("Token found in refreshToken cookie");
+                    //System.out.println("Token found in refreshToken cookie");
                     break;
                 }
             }
@@ -93,16 +93,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     if (SecurityContextHolder.getContext().getAuthentication() == null) {
                         SecurityContextHolder.getContext().setAuthentication(authentication);
-                        System.out.println("User authenticated: " + user.getEmail());
+                        //System.out.println("User authenticated: " + user.getEmail());
                     }
                 }
 
             } catch (ExpiredJwtException e) {
                 request.setAttribute("error", "Token Expired");
-                System.out.println("Token expired");
+                //System.out.println("Token expired");
             } catch (Exception e) {
                 request.setAttribute("error", "Invalid Token");
-                System.out.println("Invalid token: " + e.getMessage());
+                //System.out.println("Invalid token: " + e.getMessage());
             }
         }
 

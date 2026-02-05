@@ -3,6 +3,7 @@ package com.PlugNPlay.www.dto;
 
 import com.PlugNPlay.www.entity.User;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -14,9 +15,26 @@ public class CodeSnippestResponse {
     private String language;
     private String name;
 
-    private User user;
+    private String username;
+    private LocalDateTime createdAt;
 
     private List<CodeDto> codeFiles=new ArrayList<>();
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public UUID getId() {
         return id;
@@ -48,14 +66,6 @@ public class CodeSnippestResponse {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public List<CodeDto> getCodeFiles() {

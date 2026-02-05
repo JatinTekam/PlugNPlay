@@ -20,6 +20,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const loginFn=useAuth(state=>state.login);
+  const loading=useAuth(state=>state.authLoading);
 
 
   const { mutateAsync, isPending } = useMutation({
@@ -124,7 +125,7 @@ const Login = () => {
             disabled={isPending}
             className={`w-full py-3 mt-2 font-semibold text-white bg-blue-600 cursor-pointer rounded-lg hover:bg-blue-700 active:scale-95 transition duration-200 shadow-lg text-sm sm:text-base`}
           >
-            {isPending ? <CircularProgress color="inherit" size={25}/> :"Log in"}
+            {loading ? <CircularProgress color="inherit" size={25}/> :"Log in"}
           </button>
         </form>
 

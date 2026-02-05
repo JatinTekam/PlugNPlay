@@ -80,21 +80,24 @@ function Footer() {
               </h4>
               <div className="flex gap-3 sm:gap-4">
                 <a
-                  href="#"
+                  href="https://github.com/JatinTekam/PlugNPlay"
+                  target="_blank"
                   className={`text-xl sm:text-2xl transition-colors duration-300 hover:text-blue-500 ${darkMode ? "text-gray-400 hover:text-blue-400" : "text-gray-600"}`}
                   aria-label="GitHub"
                 >
                   <FaGithub />
                 </a>
                 <a
-                  href="#"
+                  href="https://www.linkedin.com/in/jatin-tekam/"
+                  target="_blank"
                   className={`text-xl sm:text-2xl transition-colors duration-300 hover:text-blue-500 ${darkMode ? "text-gray-400 hover:text-blue-400" : "text-gray-600"}`}
                   aria-label="LinkedIn"
                 >
                   <FaLinkedin />
                 </a>
                 <a
-                  href="#"
+                  href="https://x.com/jatin_tekam"
+                  target="_blank"
                   className={`text-xl sm:text-2xl transition-colors duration-300 hover:text-blue-500 ${darkMode ? "text-gray-400 hover:text-blue-400" : "text-gray-600"}`}
                   aria-label="Twitter"
                 >
@@ -110,7 +113,7 @@ function Footer() {
               <p className={`text-xs sm:text-sm ${darkMode ? "text-gray-500" : "text-gray-600"} text-center sm:text-left`}>
                 &copy; {currentYear} Plug & Play. All rights reserved.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 sm:justify-end text-xs sm:text-sm">
+              {/* <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 sm:justify-end text-xs sm:text-sm">
                 <a href="#" className={`transition-colors hover:text-blue-500 ${darkMode ? "text-gray-500 hover:text-blue-400" : "text-gray-600"}`}>
                   Privacy Policy
                 </a>
@@ -120,7 +123,7 @@ function Footer() {
                 <a href="#" className={`transition-colors hover:text-blue-500 ${darkMode ? "text-gray-500 hover:text-blue-400" : "text-gray-600"}`}>
                   Contact
                 </a>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

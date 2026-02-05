@@ -5,7 +5,7 @@ import { CiMenuBurger } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";
 import { FiSearch, FiPlus, FiChevronDown, FiLogOut } from "react-icons/fi";
 import { useContext, useEffect, useState, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { DarkMode } from "../context/DarkMode";
 import useAuth from "../services/auth/store";
 
@@ -21,6 +21,8 @@ function Header() {
   const checkLoginStatus = useAuth((state) => state.checkLogin);
   const user = useAuth((state) => state.user);
   const logout = useAuth((state) => state.logout);
+
+  const navigate=useNavigate();
 
   // Close profile dropdown when clicking outside
   useEffect(() => {
@@ -43,7 +45,7 @@ function Header() {
   return (
     <div className={`w-full h-16   sm:h-20 pt-2 sm:pt-4`}>
       <nav
-        className={`backdrop-blur-lg fixed top-1 left-1/2 -translate-x-1/2 z-50 h-10 sm:h-20 transition-all duration-300 ${darkMode ? "" : ""} px-4 sm:px-6 md:px-8 py-2 sm:py-3 ${darkMode ? "text-white" : "text-black"} flex justify-between items-center border-b ${darkMode ? "border-white/10" : "border-black/10"}
+        className={`backdrop-blur-lg fixed top-1 left-1/2 -translate-x-1/2 z-3 h-10 sm:h-20 transition-all duration-300 ${darkMode ? "" : ""} px-4 sm:px-6 md:px-8 py-2 sm:py-3 ${darkMode ? "text-white" : "text-black"} flex justify-between items-center border-b ${darkMode ? "border-white/10" : "border-black/10"}
         w-full sm:w-[95%] md:w-[90%] lg:w-[85%] 2xl:w-[75%] max-w-7xl rounded-none sm:rounded-none md:rounded-b-xl
       `}
       >
@@ -93,7 +95,7 @@ function Header() {
               <div className="relative" ref={profileRef}>
                 <button
                   onClick={() => setProfileDropdown(!profileDropdown)}
-                  className={`flex items-center gap-2 text-sm font-medium px-3 py-1.5 rounded-full transition border ${
+                  className={`flex items-center gap-2 cursor-pointer text-sm font-medium px-3 py-1.5 rounded-full transition border ${
                     darkMode
                       ? "border-white/20 text-white hover:bg-white/5"
                       : "border-black/10 text-black hover:bg-black/5"
@@ -133,8 +135,10 @@ function Header() {
                       onClick={() => {
                         logout();
                         setProfileDropdown(false);
+                        navigate("/");
+                        
                       }}
-                      className={`w-full text-left px-4 py-3 text-sm font-medium transition rounded-b-xl border-t flex items-center gap-2 ${
+                      className={`w-full cursor-pointer text-left px-4 py-3 text-sm font-medium transition rounded-b-xl border-t flex items-center gap-2 ${
                         darkMode
                           ? "text-red-400 hover:bg-gray-800 border-gray-700"
                           : "text-red-600 hover:bg-gray-100 border-gray-200"
@@ -174,7 +178,7 @@ function Header() {
 
           {/* GitHub Link */}
           <a
-            href="https://github.com"
+            href="https://github.com/JatinTekam/PlugNPlay"
             target="_blank"
             rel="noopener noreferrer"
             className={`text-lg sm:text-xl p-2 rounded-full transition hover:scale-110 cursor-pointer ${

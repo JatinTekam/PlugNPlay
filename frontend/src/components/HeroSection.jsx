@@ -38,7 +38,7 @@ function HeroSection() {
         </NavLink>
       </div>
 
-      <div className="relative w-full max-w-6xl mx-auto mt-8 sm:mt-10 md:mt-14 h-auto md:h-[500px] flex justify-center items-center px-4 sm:px-6">
+      <div className="relative w-full max-w-6xl z-2 mx-auto mt-8 sm:mt-10 md:mt-14 h-auto md:h-[500px] flex justify-center items-center px-4 sm:px-6">
         {/* Left Code Window - Hidden on smaller screens */}
         <div className="relative hidden xl:block w-full max-w-xs -mr-32 z-0">
           <VSCodeWindow DemoCodes={DemoCodes[0]} />

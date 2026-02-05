@@ -1,20 +1,15 @@
 package com.PlugNPlay.www.controller;
-import com.PlugNPlay.www.dto.CodeDto;
 import com.PlugNPlay.www.dto.CodeSnippestDto;
 import com.PlugNPlay.www.dto.CodeSnippestResponse;
 import com.PlugNPlay.www.dto.UserDTO;
-import com.PlugNPlay.www.entity.CodeSnippest;
-import com.PlugNPlay.www.exceptions.ResourceNotFoundException;
-import com.PlugNPlay.www.repository.CodeRepo;
 import com.PlugNPlay.www.repository.CodeSnippestRepository;
+import com.PlugNPlay.www.service.CodeSnippestInterface;
 import com.PlugNPlay.www.service.UserService;
 import com.PlugNPlay.www.serviceImpl.CodeSnippestImpl;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -73,34 +68,5 @@ public class UserController {
     public ResponseEntity<UserDTO> getUserById(@PathVariable String userId){
         return ResponseEntity.ok(userService.getUserById(userId));
     }
-
-
-    //Snippest
-
-    @PostMapping("/code")
-    public ResponseEntity<CodeSnippestResponse> saveCode(@RequestBody CodeSnippestDto codeSnippestDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUserCode(codeSnippestDto));
-    }
-
-    @PostMapping("/snippest/{id}")
-    public ResponseEntity<?> getSnippest(@PathVariable String id){
-
-        UUID snipId=UUID.fromString(id);
-        System.out.println(id);
-        return ResponseEntity.ok(codeSnippestRepository.findById(snipId));
-    }
-
-    @GetMapping("/snippest")
-    public ResponseEntity<List<CodeSnippestDto>> getAllCodeSnippest(){
-        return ResponseEntity.ok(codeSnippest.getAllDtos());
-    }
-
-
-
-
-
-
-
-
 
 }

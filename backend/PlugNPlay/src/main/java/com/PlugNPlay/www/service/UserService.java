@@ -27,8 +27,4 @@ public interface UserService {
     //Get All Users
     Iterable<UserDTO> getAllUsers();
 
-    //Save User Code
-    CodeSnippestResponse saveUserCode(CodeSnippestDto codeSnippestDto);
-
-
 }

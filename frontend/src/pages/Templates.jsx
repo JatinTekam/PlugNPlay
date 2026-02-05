@@ -2,13 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { DarkMode } from "../context/DarkMode";
 import codeImg from "../utils/images/codeImg.jpg";
 import { CiBookmark, CiFolderOn } from "react-icons/ci";
-import { NavLink } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-import { getTemplates } from "../services/user/user";
+import { FiArrowLeft } from "react-icons/fi";
+import { NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../services/auth/store";
 
 function Templates() {
   const [darkMode] = useContext(DarkMode);
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [bookmarkedTemplates, setBookmarkedTemplates] = useState(new Set());
@@ -31,42 +31,42 @@ function Templates() {
  
 
   // Mock templates data
-  const mockTemplates = [
-    {
-      id: 1,
-      name: "Java Configuration File",
-      description: "Complete Java configuration setup with best practices",
-      createdBy: "Jatin Tekam",
-      category: "Java",
-      files: 5,
-    },
-    {
-      id: 2,
-      name: "Node Express API",
-      description: "Express.js API boilerplate with routing and middleware",
-      createdBy: "Jatin Tekam",
-      category: "Node",
-      files: 8,
-    },
-    {
-      id: 3,
-      name: "Python Django Setup",
-      description: "Django project structure with models and views",
-      createdBy: "Developer",
-      category: "Python",
-      files: 6,
-    },
-    {
-      id: 4,
-      name: "TypeScript React App",
-      description: "React + TypeScript starter with hooks and context",
-      createdBy: "Jatin Tekam",
-      category: "TypeScript",
-      files: 12,
-    },
-  ];
+  // const mockTemplates = [
+  //   {
+  //     id: 1,
+  //     name: "Java Configuration File",
+  //     description: "Complete Java configuration setup with best practices",
+  //     createdBy: "Jatin Tekam",
+  //     category: "Java",
+  //     files: 5,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Node Express API",
+  //     description: "Express.js API boilerplate with routing and middleware",
+  //     createdBy: "Jatin Tekam",
+  //     category: "Node",
+  //     files: 8,
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Python Django Setup",
+  //     description: "Django project structure with models and views",
+  //     createdBy: "Developer",
+  //     category: "Python",
+  //     files: 6,
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "TypeScript React App",
+  //     description: "React + TypeScript starter with hooks and context",
+  //     createdBy: "Jatin Tekam",
+  //     category: "TypeScript",
+  //     files: 12,
+  //   },
+  // ];
 
-  const categories = ["All", "Java", "Node", "Python", "TypeScript"];
+  const categories = ["All", "Java", "Node", "Python","JavaScript", "TypeScript","C++",".Net","Go","Ruby","PHP"];
 
   const filteredTemplates = (template || []).filter((template) => {
     const matchesCategory =
@@ -96,6 +96,19 @@ function Templates() {
       } px-4 sm:px-6 md:px-8 py-8 md:py-10`}
     >
       <div className="max-w-6xl mx-auto">
+        {/* Back Button */}
+        <button
+          onClick={() => navigate(-1)}
+          className={`mb-6 p-2 rounded-lg cursor-pointer transition-all duration-200 transform hover:scale-110 active:scale-95 flex items-center gap-2 font-semibold ${
+            darkMode
+              ? "text-gray-400 hover:bg-gray-800 hover:text-white"
+              : "text-gray-600 hover:bg-gray-200 hover:text-black"
+          }`}
+        >
+          <FiArrowLeft className="w-5 h-5" />
+          <span>Back</span>
+        </button>
+
         {/* Header Section */}
         <div className="mb-12">
           <h1
@@ -200,14 +213,14 @@ function Templates() {
                      Category:- {template.language}
                     </p>
                     <div className="space-y-2">
-                      {/* <p
+                      <p
                         className={`text-sm transition-colors ${
                           darkMode ? "text-gray-400" : "text-gray-600"
                         }`}
                       >
                         <span className="font-semibold">Created By:</span>{" "}
-                        {template.createdBy}
-                      </p> */}
+                        {template.username}
+                      </p>
                       <p
                         className={`text-sm flex items-center gap-1 transition-colors ${
                           darkMode ? "text-gray-400" : "text-gray-600"
