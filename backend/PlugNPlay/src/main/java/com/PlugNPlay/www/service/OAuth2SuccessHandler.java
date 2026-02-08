@@ -78,6 +78,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                 String login = oAuth2User.getAttributes().getOrDefault("login","").toString();
 
                 String email = (String) oAuth2User.getAttributes().getOrDefault("email","");
+                System.out.println(email);
 
                 if (email == null) {
                     email = login + "@github.com";
@@ -99,6 +100,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             }
         }
 
+        System.out.println(user.getName());
 
 
         String jti = UUID.randomUUID().toString();
