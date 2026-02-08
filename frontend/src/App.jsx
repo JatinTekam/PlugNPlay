@@ -15,6 +15,8 @@ import Dashboard from "./pages/Dashboard";
 import useAuth from "./services/auth/store";
 import Auth from "./pages/Auth";
 import AddTemplate from "./pages/AddTemplate";
+import OAuthSuccess from "./pages/OAuthSuccess";
+import OAuthFailure from "./pages/OAuthFailure";
 
 function App() {
   const [darkMode, setDarkMode] = useContext(DarkMode);
@@ -42,6 +44,10 @@ function App() {
               <Route path="/profile" element={<Profile />} />
             <Route path="/addtemplate" element={<AddTemplate />} />
             </Route>
+
+            <Route path="/oauth/success" element={<OAuthSuccess />} />
+            <Route path="/oauth/failure" element={<OAuthFailure/>} />
+
           </Route>
         </Routes>
         <ReactQueryDevtools initialIsOpen={false} />

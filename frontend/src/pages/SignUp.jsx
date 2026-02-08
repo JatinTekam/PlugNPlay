@@ -7,6 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { signUp } from "../services/auth/auth";
 import toast from "react-hot-toast";
 import CircularProgress from '@mui/material/CircularProgress';
+import OAuthButton from "../components/OAuthButton";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -203,28 +204,9 @@ const Signup = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
-          <button
-            className={`py-2.5 px-4 cursor-pointer rounded-lg font-medium text-sm sm:text-base transition border flex items-center justify-center gap-2 hover:opacity-80 ${
-              darkMode
-                ? "bg-white/10 border-white/20 text-white hover:bg-white/20"
-                : "bg-gray-100 border-gray-300 text-black hover:bg-gray-200"
-            }`}
-          >
-            <FcGoogle className="text-xl" />
-            <span className="hidden sm:inline">Google</span>
-          </button>
-          <button
-            className={`py-2.5 px-4 cursor-pointer rounded-lg font-medium text-sm sm:text-base transition border flex items-center justify-center gap-2 hover:opacity-80 ${
-              darkMode
-                ? "bg-white/10 border-white/20 text-white hover:bg-white/20"
-                : "bg-gray-100 border-gray-300 text-black hover:bg-gray-200"
-            }`}
-          >
-            <RxGithubLogo className="text-xl" />
-            <span className="hidden sm:inline">GitHub</span>
-          </button>
-        </div>
+
+          {/* OAuth2 Buttons */}
+          <OAuthButton/>
 
         <p
           className={`text-sm text-center ${darkMode ? "text-gray-300" : "text-gray-600"}`}

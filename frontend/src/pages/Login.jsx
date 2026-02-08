@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { FcGoogle } from "react-icons/fc";
-import { RxGithubLogo } from "react-icons/rx";
+import React, { useState } from "react";
 import { DarkMode } from "../context/DarkMode";
 import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -9,6 +7,7 @@ import { login } from "../services/auth/auth";
 import CircularProgress from "@mui/material/CircularProgress";
 import toast from "react-hot-toast";
 import useAuth from "../services/auth/store";
+import OAuthButton from "../components/OAuthButton";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -144,28 +143,10 @@ const Login = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
-          <button
-            className={`py-2.5 px-4 cursor-pointer rounded-lg font-medium text-sm sm:text-base transition border flex items-center justify-center gap-2 hover:opacity-80 ${
-              darkMode
-                ? "bg-white/10 border-white/20 text-white hover:bg-white/20"
-                : "bg-gray-100 border-gray-300 text-black hover:bg-gray-200"
-            }`}
-          >
-            <FcGoogle className="text-xl" />
-            <span className="hidden sm:inline">Google</span>
-          </button>
-          <button
-            className={`py-2.5 px-4 cursor-pointer rounded-lg font-medium text-sm sm:text-base transition border flex items-center justify-center gap-2 hover:opacity-80 ${
-              darkMode
-                ? "bg-white/10 border-white/20 text-white hover:bg-white/20"
-                : "bg-gray-100 border-gray-300 text-black hover:bg-gray-200"
-            }`}
-          >
-            <RxGithubLogo className="text-xl" />
-            <span className="hidden sm:inline">GitHub</span>
-          </button>
-        </div>
+
+
+        {/* OAuth Buttons */}
+        <OAuthButton/>
 
         <p
           className={`text-sm text-center ${darkMode ? "text-gray-300" : "text-gray-600"}`}

@@ -80,6 +80,11 @@ const useAuth = create(
         });
       },
 
+      setSnippests: (snippests) =>
+        set(() => ({
+          snippests,
+        })),
+
       // Check if user is logged in
       checkLogin: () => {
         if (get().accessToken && get().authStatus) {

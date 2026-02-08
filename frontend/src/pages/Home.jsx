@@ -3,7 +3,7 @@ import HeroSection from '../components/HeroSection'
 import Instruction from '../components/Instruction'
 import FeaturedCards from '../components/FeaturedCards'
 import LanguageSupport from '../components/LanguageSupport'
-import { getCurrentUser } from '../services/user/user'
+
 
 const Home = () => {
   return (

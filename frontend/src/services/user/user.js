@@ -2,7 +2,7 @@ import axios from "axios";
 import useAuth from "../auth/store";
 
 const baseUrl = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL || "http://localhost:8081/api/v1",
+  baseURL: import.meta.env.VITE_USER_URL || "http://localhost:8081/api/v1",
   withCredentials: true,
 });
 

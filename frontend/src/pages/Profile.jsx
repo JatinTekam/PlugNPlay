@@ -29,12 +29,18 @@ export const Profile = () => {
     }
   }
 
-  const sortedTemplates = [...(codeSnippests || [])].sort((a, b) => {
-    if (sortBy === "newest") return b.id - a.id;
-    if (sortBy === "oldest") return a.id - b.id;
-    if (sortBy === "name") return a.name.localeCompare(b.name);
-    return 0;
-  });
+ const sortedTemplates = [...(codeSnippests || [])].sort((a, b) => {
+  if (sortBy === "newest")
+    return new Date(b.createdAt) - new Date(a.createdAt);
+
+  if (sortBy === "oldest")
+    return new Date(a.createdAt) - new Date(b.createdAt);
+
+  if (sortBy === "name")
+    return a.name.localeCompare(b.name);
+
+  return 0;
+});
 
   return (
     <section
