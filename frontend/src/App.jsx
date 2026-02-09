@@ -38,7 +38,6 @@ function App() {
 
             <Route path="/templates" element={<Templates />} />
             <Route path="/templateinfo/:id" element={<TemplateInfo />} />
-            {/* <Route path="/addtemplate" element={<AddTemplate />} /> */}
 
             <Route path="/" element={<Dashboard status={loginStatus} />}>
               <Route path="/profile" element={<Profile />} />

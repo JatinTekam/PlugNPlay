@@ -29,7 +29,6 @@ const OAuthSuccess = () => {
           toast.success("Login Successfull Redirecting to Dashboard...");
           setSnippests(responseLoginData.user.codeSnippests || []);
           navigate("/profile");
-          //console.log(responseLoginData?.user?.codeSnippests);
           
         } catch (error) {
           toast.error("Login Failed Please Try Again");

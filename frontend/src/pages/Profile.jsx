@@ -15,7 +15,6 @@ export const Profile = () => {
   const user = useAuth((state) => state.user);
   const logout = useAuth((state) => state.logout);
   const codeSnippests = useAuth((state) => state.snippests);
-  const codes = useAuth((state) => state.codes);
 
   // Edit mode state
 
@@ -28,6 +27,10 @@ export const Profile = () => {
       toast.error("Error fetching user data:", error.message);
     }
   }
+
+  useEffect(()=>{
+    console.log(codeSnippests);
+  },[codeSnippests])
 
  const sortedTemplates = [...(codeSnippests || [])].sort((a, b) => {
   if (sortBy === "newest")

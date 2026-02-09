@@ -3,7 +3,7 @@ import { DarkMode } from "../context/DarkMode";
 import { FiArrowLeft, FiPlus, FiTrash2 } from "react-icons/fi";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
-import { addTemplate } from "../services/user/user";
+import { addTemplate, templateById } from "../services/user/user";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../services/auth/store";
@@ -12,6 +12,7 @@ const AddTemplate = () => {
   const [darkMode] = useContext(DarkMode);
   const navigate = useNavigate();
   const username=useAuth(state=>state.user?.name || state.user?.email);
+  const templateById=useAuth(state=>state.templateById);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -128,7 +129,7 @@ const AddTemplate = () => {
     }
 
     try {
-      await mutateAsync(formData);
+      const res=await mutateAsync(formData);
       toast.success("Template created successfully!");
       setFormData({
         name: "",
@@ -178,26 +179,6 @@ const AddTemplate = () => {
           </p>
         </div>
 
-        {/* Error/Success Messages
-        {submitError && (
-          <div className={`mb-6 p-4 rounded-lg text-sm sm:text-base ${
-            darkMode
-              ? 'bg-red-900 text-red-200 border border-red-700'
-              : 'bg-red-50 text-red-700 border border-red-200'
-          }`}>
-            {submitError}
-          </div>
-        )}
-
-        {submitSuccess && (
-          <div className={`mb-6 p-4 rounded-lg text-sm sm:text-base ${
-            darkMode
-              ? 'bg-green-900 text-green-200 border border-green-700'
-              : 'bg-green-50 text-green-700 border border-green-200'
-          }`}>
-            ✓ Template created successfully!
-          </div>
-        )} */}
 
         <form onSubmit={handleSubmit} className="space-y-8 sm:space-y-10">
           {/* Template Name */}

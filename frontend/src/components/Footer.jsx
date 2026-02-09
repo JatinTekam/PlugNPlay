@@ -61,12 +61,14 @@ function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className={`text-sm sm:text-base transition-colors hover:text-blue-500 ${darkMode ? "text-gray-400 hover:text-blue-400" : "text-gray-600"}`}>
+                  <a href={`${import.meta.env.VITE_API_DOCS_URL}`}
+                  target="_blank" 
+                  className={`text-sm sm:text-base transition-colors hover:text-blue-500 ${darkMode ? "text-gray-400 hover:text-blue-400" : "text-gray-600"}`}>
                     API Docs
                   </a>
                 </li>
                 <li>
-                  <a href="#" className={`text-sm sm:text-base transition-colors hover:text-blue-500 ${darkMode ? "text-gray-400 hover:text-blue-400" : "text-gray-600"}`}>
+                  <a href="mailto:tekamjatin@gmail.com" className={`text-sm sm:text-base transition-colors hover:text-blue-500 ${darkMode ? "text-gray-400 hover:text-blue-400" : "text-gray-600"}`}>
                     Support
                   </a>
                 </li>
@@ -113,17 +115,6 @@ function Footer() {
               <p className={`text-xs sm:text-sm ${darkMode ? "text-gray-500" : "text-gray-600"} text-center sm:text-left`}>
                 &copy; {currentYear} Plug & Play. All rights reserved.
               </p>
-              {/* <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 sm:justify-end text-xs sm:text-sm">
-                <a href="#" className={`transition-colors hover:text-blue-500 ${darkMode ? "text-gray-500 hover:text-blue-400" : "text-gray-600"}`}>
-                  Privacy Policy
-                </a>
-                <a href="#" className={`transition-colors hover:text-blue-500 ${darkMode ? "text-gray-500 hover:text-blue-400" : "text-gray-600"}`}>
-                  Terms of Service
-                </a>
-                <a href="#" className={`transition-colors hover:text-blue-500 ${darkMode ? "text-gray-500 hover:text-blue-400" : "text-gray-600"}`}>
-                  Contact
-                </a>
-              </div> */}
             </div>
           </div>
         </div>

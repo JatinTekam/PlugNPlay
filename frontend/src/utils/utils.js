@@ -103,8 +103,8 @@ export const CardsImg=[
    },
    {
     img:image3,
-    title:"Easy To Use",
-    desc:"Built for simplicity, Plug & play, Free forever"
+    title:"Developer Friendly",
+    desc:"Clean code structure with reusable and maintainable components."
    }
 
 ]

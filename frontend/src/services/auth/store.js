@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { login, logout as logoutApi } from "./auth";
 import { persist } from "zustand/middleware";
-import { getTemplates } from "../user/user";
+import { getTemplateById, getTemplates } from "../user/user";
 
 const AUTH_STORAGE_KEY = "auth_app";
 
@@ -54,6 +54,19 @@ const useAuth = create(
           set({
             authLoading: false,
           });
+        }
+      },
+
+      templateById:async(id)=>{
+        try {
+          set({ authLoading: true });
+          const templateResponse=await getTemplateById(id);
+          set((state)=>({
+            snippests:[...state.snippests,templateResponse],
+          }))
+        } catch (error) {}
+        finally{
+          set({ authLoading: false });
         }
       },
 

@@ -262,23 +262,7 @@ function Templates() {
                     >
                       View Details
                     </span>
-                    {/* <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        toggleBookmark(template.id);
-                      }}
-                      className={`text-2xl sm:text-3xl transition-all duration-300 transform hover:scale-125 ${
-                        bookmarkedTemplates.has(template.id)
-                          ? darkMode
-                            ? "text-red-500"
-                            : "text-red-600"
-                          : darkMode
-                          ? "text-gray-400"
-                          : "text-gray-400"
-                      }`}
-                    >
-                      <CiBookmark />
-                    </button> */}
+                    
                   </div>
                 </div>
               </NavLink>

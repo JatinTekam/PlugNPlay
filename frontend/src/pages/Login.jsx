@@ -44,7 +44,7 @@ const Login = () => {
     try {
       //const res = await mutateAsync(formData);
       await loginFn(formData);
-      toast.success("Login Successful");
+      toast.success("Login Successfully");
       navigate("/profile");
     } catch (error) {
 

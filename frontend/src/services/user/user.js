@@ -56,7 +56,6 @@ baseUrl.interceptors.response.use(
     isRefreshing=true;
 
     try {
-      //useAuth.getState().changeLocalLoginData(newToken,loginUserData.user,true,false);
       const loginUserData= await refreshToken();
       const newToken=loginUserData.accessToken;
 
@@ -110,4 +109,9 @@ export async function getCurrentUser(email) {
 export async function refreshToken(){
  const response=await baseUrl.post("/auth/refresh");
  return response.data;
+}
+
+export async function getTemplateById(id){
+  const res=await baseUrl.get(`/user/snippest/${id}`);
+  return res.data;
 }
