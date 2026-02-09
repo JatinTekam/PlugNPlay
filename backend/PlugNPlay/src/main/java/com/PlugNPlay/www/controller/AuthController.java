@@ -2,14 +2,10 @@ package com.PlugNPlay.www.controller;
 import com.PlugNPlay.www.dto.LoginRequest;
 import com.PlugNPlay.www.dto.RefreshTokenRequest;
 import com.PlugNPlay.www.dto.TokenResponse;
-import com.PlugNPlay.www.dto.UserDTO;
-import com.PlugNPlay.www.repository.RefreshTokenRepository;
+import com.PlugNPlay.www.dto.UserRequest;
 import com.PlugNPlay.www.service.AuthService;
-import com.PlugNPlay.www.service.CookieService;
-import com.PlugNPlay.www.service.JWTService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +28,8 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<UserDTO> userRegister(@RequestBody UserDTO userDTO){
-        return ResponseEntity.status(HttpStatus.CREATED).body(authService.registerUser(userDTO));
+    public ResponseEntity<UserRequest> userRegister(@RequestBody UserRequest userRequest){
+        return ResponseEntity.status(HttpStatus.CREATED).body(authService.registerUser(userRequest));
     }
 
     //Renew Access And Refresh Token

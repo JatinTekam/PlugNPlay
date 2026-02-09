@@ -1,6 +1,5 @@
 package com.PlugNPlay.www.security;
 
-import com.PlugNPlay.www.entity.Role;
 import com.PlugNPlay.www.entity.User;
 import com.PlugNPlay.www.exceptions.ResourceNotFoundException;
 import com.PlugNPlay.www.repository.UserRepository;
@@ -20,9 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 

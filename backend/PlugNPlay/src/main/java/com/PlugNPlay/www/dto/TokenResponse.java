@@ -5,9 +5,9 @@ public record TokenResponse(
         String refreshToken,
         long  expiresIn,
         String tokenType,
-        UserDTO user
+        UserRequest user
 ) {
-    public static TokenResponse of(String accessToken, String refreshToken, long expiresIn,UserDTO user) {
+    public static TokenResponse of(String accessToken, String refreshToken, long expiresIn, UserRequest user) {
        return new TokenResponse(accessToken, refreshToken, expiresIn, "Bearer", user);
     }
 }

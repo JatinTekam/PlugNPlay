@@ -1,9 +1,7 @@
 package com.PlugNPlay.www.entity;
 
-import com.PlugNPlay.www.dto.CodeDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;

@@ -2,16 +2,16 @@ package com.PlugNPlay.www.dto;
 
 import java.util.UUID;
 
-public class CodeDto {
+public class CodeRequest {
 
     private UUID id;
     private String name;
     private String content;
     private String extension;
 
-    public CodeDto() {}
+    public CodeRequest() {}
 
-    public CodeDto(UUID id, String name, String content, String extension) {
+    public CodeRequest(UUID id, String name, String content, String extension) {
         this.id = id;
         this.name = name;
         this.content = content;

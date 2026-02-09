@@ -1,17 +1,15 @@
 package com.PlugNPlay.www.dto;
-import com.PlugNPlay.www.entity.CodeSnippest;
 import com.PlugNPlay.www.enums.Provider;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class UserDTO {
+public class UserRequest {
     private UUID id;
     private String name;
     private String email;
     private String password;
     private boolean enable=true;
-   // private List<CodeSnippest> codeSnippests=new ArrayList<>();
-    private List<CodeSnippestDto> codeSnippests=new ArrayList<>();
+    private List<CodeSnippestRequest> codeSnippests=new ArrayList<>();
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
     private Provider provider=Provider.LOCAL;
@@ -90,11 +88,11 @@ public class UserDTO {
         this.roles = roles;
     }
 
-    public List<CodeSnippestDto> getCodeSnippests() {
+    public List<CodeSnippestRequest> getCodeSnippests() {
         return codeSnippests;
     }
 
-    public void setCodeSnippests(List<CodeSnippestDto> codeSnippests) {
+    public void setCodeSnippests(List<CodeSnippestRequest> codeSnippests) {
         this.codeSnippests = codeSnippests;
     }
 }

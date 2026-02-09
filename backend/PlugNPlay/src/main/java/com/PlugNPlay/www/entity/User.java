@@ -1,7 +1,6 @@
 package com.PlugNPlay.www.entity;
 import com.PlugNPlay.www.enums.Provider;
 import jakarta.persistence.*;
-import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;

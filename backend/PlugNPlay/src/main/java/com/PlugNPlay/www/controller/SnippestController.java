@@ -1,6 +1,6 @@
 package com.PlugNPlay.www.controller;
 
-import com.PlugNPlay.www.dto.CodeSnippestDto;
+import com.PlugNPlay.www.dto.CodeSnippestRequest;
 import com.PlugNPlay.www.dto.CodeSnippestResponse;
 import com.PlugNPlay.www.service.CodeSnippestInterface;
 import org.springframework.http.HttpStatus;
@@ -20,11 +20,11 @@ public class SnippestController {
     }
 
     @PostMapping("/code")
-    public ResponseEntity<CodeSnippestResponse> saveCode(@RequestBody CodeSnippestDto codeSnippestDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(codeSnippest.saveUserCode(codeSnippestDto));
+    public ResponseEntity<CodeSnippestResponse> saveCode(@RequestBody CodeSnippestRequest codeSnippestRequest){
+        return ResponseEntity.status(HttpStatus.CREATED).body(codeSnippest.saveUserCode(codeSnippestRequest));
     }
 
-    @PostMapping("/snippest/{id}")
+    @GetMapping("/snippest/{id}")
     public ResponseEntity<CodeSnippestResponse> getSnippest(@PathVariable String id){
         UUID snipId=UUID.fromString(id);
         return ResponseEntity.ok(codeSnippest.getSnippestById(snipId));

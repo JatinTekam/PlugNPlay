@@ -1,7 +1,6 @@
 package com.PlugNPlay.www.dto;
 
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 
 public record ApiError(

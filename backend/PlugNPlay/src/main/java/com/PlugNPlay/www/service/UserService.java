@@ -1,30 +1,25 @@
 package com.PlugNPlay.www.service;
-import com.PlugNPlay.www.dto.CodeSnippestDto;
-import com.PlugNPlay.www.dto.CodeSnippestResponse;
-import com.PlugNPlay.www.dto.UserDTO;
-
-
-import java.util.UUID;
+import com.PlugNPlay.www.dto.UserRequest;
 
 
 public interface UserService {
 
     //Create User
-    UserDTO createUser(UserDTO user);
+    UserRequest createUser(UserRequest user);
 
     //Get User By Email
-    UserDTO getUserByEmail(String email);
+    UserRequest getUserByEmail(String email);
 
     //Update User
-    UserDTO updateUser(UserDTO UserDTO,String userId);
+    UserRequest updateUser(UserRequest UserRequest, String userId);
 
     //Delete User
     void deleteUser(String userId);
 
     //Get User By Id
-    UserDTO getUserById(String userId);
+    UserRequest getUserById(String userId);
 
     //Get All Users
-    Iterable<UserDTO> getAllUsers();
+    Iterable<UserRequest> getAllUsers();
 
 }

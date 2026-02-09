@@ -1,6 +1,5 @@
 package com.PlugNPlay.www.entity;
 import jakarta.persistence.*;
-import lombok.*;
 import java.util.UUID;
 
 @Entity

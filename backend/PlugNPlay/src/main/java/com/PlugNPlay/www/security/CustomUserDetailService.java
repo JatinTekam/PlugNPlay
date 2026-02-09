@@ -1,7 +1,5 @@
 package com.PlugNPlay.www.security;
 
-import com.PlugNPlay.www.entity.User;
-import com.PlugNPlay.www.exceptions.ResourceNotFoundException;
 import com.PlugNPlay.www.repository.UserRepository;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;

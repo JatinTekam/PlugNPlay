@@ -12,6 +12,8 @@ public class Code {
     private UUID id;
 
     private String name;
+
+    @Column(columnDefinition = "LONGTEXT")
     private String content;
     private String extension;
 

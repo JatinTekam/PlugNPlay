@@ -1,7 +1,7 @@
 package com.PlugNPlay.www.serviceImpl;
 
-import com.PlugNPlay.www.dto.CodeDto;
-import com.PlugNPlay.www.dto.CodeSnippestDto;
+import com.PlugNPlay.www.dto.CodeRequest;
+import com.PlugNPlay.www.dto.CodeSnippestRequest;
 import com.PlugNPlay.www.dto.CodeSnippestResponse;
 import com.PlugNPlay.www.entity.Code;
 import com.PlugNPlay.www.entity.CodeSnippest;
@@ -43,15 +43,15 @@ public class CodeSnippestImpl implements CodeSnippestInterface {
             codeSnippestResponse.setUsername(snippest.getUsername());
             //codeSnippestResponse.setUser(snippest.getUser());
             codeSnippestResponse.setCreatedAt(snippest.getCreatedAt());
-            List<CodeDto> codeDtos = mapSnippestToCodeDto(snippest);
-            codeSnippestResponse.setCodeFiles(codeDtos);
+            List<CodeRequest> codeRequests = mapSnippestToCodeDto(snippest);
+            codeSnippestResponse.setCodeFiles(codeRequests);
             listOfCodeSnippestResponses.add(codeSnippestResponse);
         }
         return listOfCodeSnippestResponses;
     }
 
     @Override
-    public CodeSnippestResponse saveUserCode(CodeSnippestDto codeSnippestDto){
+    public CodeSnippestResponse saveUserCode(CodeSnippestRequest codeSnippestRequest){
 
         // Fetch user From SecurityContextHolder
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -60,20 +60,20 @@ public class CodeSnippestImpl implements CodeSnippestInterface {
 
         //Create snippet
         CodeSnippest snippest=new CodeSnippest();
-        snippest.setName(codeSnippestDto.getName());
-        snippest.setDescription(codeSnippestDto.getDescription());
-        snippest.setLanguage(codeSnippestDto.getLanguage());
+        snippest.setName(codeSnippestRequest.getName());
+        snippest.setDescription(codeSnippestRequest.getDescription());
+        snippest.setLanguage(codeSnippestRequest.getLanguage());
         snippest.setUser(user);
         snippest.setUsername(user.getName());
 
         //Map code files
         List<Code> codes=new ArrayList<>();
 
-        for(CodeDto codeDto: codeSnippestDto.getCodeFiles()){
+        for(CodeRequest codeRequest : codeSnippestRequest.getCodeFiles()){
             Code code=new Code();
-            code.setName(codeDto.getName());
-            code.setContent(codeDto.getContent());
-            code.setExtension(codeDto.getExtension());
+            code.setName(codeRequest.getName());
+            code.setContent(codeRequest.getContent());
+            code.setExtension(codeRequest.getExtension());
 
             code.setCodeSnippest(snippest);
             codes.add(code);
@@ -93,8 +93,8 @@ public class CodeSnippestImpl implements CodeSnippestInterface {
         codeSnippestResponse.setCreatedAt(save.getCreatedAt());
 
 
-        List<CodeDto> codeDtos = mapSnippestToCodeDto(save);
-        codeSnippestResponse.setCodeFiles(codeDtos);
+        List<CodeRequest> codeRequests = mapSnippestToCodeDto(save);
+        codeSnippestResponse.setCodeFiles(codeRequests);
         return codeSnippestResponse;
     }
 
@@ -113,8 +113,8 @@ public class CodeSnippestImpl implements CodeSnippestInterface {
             codeSnippestResponse.setUsername(snippest.getUsername());
             codeSnippestResponse.setCreatedAt(snippest.getCreatedAt());
 
-            List<CodeDto> codeDtos = mapSnippestToCodeDto(snippest);
-            codeSnippestResponse.setCodeFiles(codeDtos);
+            List<CodeRequest> codeRequests = mapSnippestToCodeDto(snippest);
+            codeSnippestResponse.setCodeFiles(codeRequests);
             return codeSnippestResponse;
         }
 
@@ -123,8 +123,8 @@ public class CodeSnippestImpl implements CodeSnippestInterface {
     }
 
 
-    private CodeSnippestDto mapToDto(CodeSnippest entity) {
-        CodeSnippestDto dto = new CodeSnippestDto();
+    private CodeSnippestRequest mapToDto(CodeSnippest entity) {
+        CodeSnippestRequest dto = new CodeSnippestRequest();
 
         dto.setId(entity.getId());
         dto.setName(entity.getName());
@@ -135,7 +135,7 @@ public class CodeSnippestImpl implements CodeSnippestInterface {
         dto.setCodeFiles(
                 entity.getCodeFiles()
                         .stream()
-                        .map(code -> new CodeDto(
+                        .map(code -> new CodeRequest(
                                 code.getId(),
                                 code.getName(),
                                 code.getContent(),
@@ -147,12 +147,12 @@ public class CodeSnippestImpl implements CodeSnippestInterface {
         return dto;
     }
 
-    public List<CodeDto> mapSnippestToCodeDto(CodeSnippest snippest){
+    public List<CodeRequest> mapSnippestToCodeDto(CodeSnippest snippest){
 
        return snippest.getCodeFiles()
                 .stream()
                 .map(code -> {
-                    CodeDto dto = new CodeDto();
+                    CodeRequest dto = new CodeRequest();
                     dto.setId(code.getId());
                     dto.setName(code.getName());
                     dto.setContent(code.getContent());

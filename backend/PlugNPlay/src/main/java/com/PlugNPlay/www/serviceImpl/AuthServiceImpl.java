@@ -3,7 +3,7 @@ package com.PlugNPlay.www.serviceImpl;
 import com.PlugNPlay.www.dto.LoginRequest;
 import com.PlugNPlay.www.dto.RefreshTokenRequest;
 import com.PlugNPlay.www.dto.TokenResponse;
-import com.PlugNPlay.www.dto.UserDTO;
+import com.PlugNPlay.www.dto.UserRequest;
 import com.PlugNPlay.www.entity.RefreshToken;
 import com.PlugNPlay.www.entity.User;
 import com.PlugNPlay.www.repository.RefreshTokenRepository;
@@ -61,11 +61,11 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public UserDTO registerUser(UserDTO userDTO) {
-        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        UserDTO user = userService.createUser(userDTO);
+    public UserRequest registerUser(UserRequest userRequest) {
+        userRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+        UserRequest user = userService.createUser(userRequest);
 
-        UserDTO userResponse=new UserDTO();
+        UserRequest userResponse=new UserRequest();
         userResponse.setId(user.getId());
         userResponse.setName(user.getName());
         userResponse.setEmail(user.getEmail());
@@ -109,7 +109,7 @@ public class AuthServiceImpl implements AuthService {
 
         user.setPassword("");
 
-        return TokenResponse.of(accessToken, refreshToken, jwtService.getAccessTTLSecond(), modelMapper.map(user, UserDTO.class));
+        return TokenResponse.of(accessToken, refreshToken, jwtService.getAccessTTLSecond(), modelMapper.map(user, UserRequest.class));
 
     }
 
@@ -179,7 +179,7 @@ public class AuthServiceImpl implements AuthService {
         cookieService.attachRefreshCookie(response,newRefreshToken,(int)jwtService.getRefreshTTLSecond());
         cookieService.addNoStoreHeader(response);
 
-        return TokenResponse.of(newAccessToken,newRefreshToken, jwtService.getAccessTTLSecond(), modelMapper.map(user,UserDTO.class));
+        return TokenResponse.of(newAccessToken,newRefreshToken, jwtService.getAccessTTLSecond(), modelMapper.map(user, UserRequest.class));
     }
 
     private Authentication authenticate(LoginRequest loginRequest) {

@@ -1,17 +1,10 @@
 package com.PlugNPlay.www.controller;
-import com.PlugNPlay.www.dto.CodeSnippestDto;
-import com.PlugNPlay.www.dto.CodeSnippestResponse;
-import com.PlugNPlay.www.dto.UserDTO;
-import com.PlugNPlay.www.repository.CodeSnippestRepository;
-import com.PlugNPlay.www.service.CodeSnippestInterface;
+import com.PlugNPlay.www.dto.UserRequest;
 import com.PlugNPlay.www.service.UserService;
-import com.PlugNPlay.www.serviceImpl.CodeSnippestImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
-import java.util.UUID;
 
 
 @RestController
@@ -20,33 +13,29 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
-    private final CodeSnippestRepository codeSnippestRepository;
-    private final CodeSnippestImpl codeSnippest;
 
 
     @Autowired
-    public UserController(UserService userService, CodeSnippestRepository codeSnippestRepository, CodeSnippestImpl codeSnippest) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.codeSnippestRepository = codeSnippestRepository;
-        this.codeSnippest = codeSnippest;
     }
 
 
     //Create User In Database
     @PostMapping()
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userDto));
+    public ResponseEntity<UserRequest> createUser(@RequestBody UserRequest userRequest){
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userRequest));
     }
 
     //Get All Users
     @GetMapping()
-    public ResponseEntity<Iterable<UserDTO>> getAllUser(){
+    public ResponseEntity<Iterable<UserRequest>> getAllUser(){
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     //Get User By Email
     @GetMapping("/email/{email}")
-    public ResponseEntity<UserDTO> getUserByEmail(@PathVariable String email){
+    public ResponseEntity<UserRequest> getUserByEmail(@PathVariable String email){
         return ResponseEntity.ok(userService.getUserByEmail(email));
     }
 
@@ -58,14 +47,14 @@ public class UserController {
 
     //Update The User
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO,@PathVariable String userId){
-        return ResponseEntity.ok(userService.updateUser(userDTO,userId));
+    public ResponseEntity<UserRequest> updateUser(@RequestBody UserRequest userRequest, @PathVariable String userId){
+        return ResponseEntity.ok(userService.updateUser(userRequest,userId));
     }
 
 
     //Get User By Id
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable String userId){
+    public ResponseEntity<UserRequest> getUserById(@PathVariable String userId){
         return ResponseEntity.ok(userService.getUserById(userId));
     }
 

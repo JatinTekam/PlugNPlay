@@ -3,7 +3,7 @@ package com.PlugNPlay.www.service;
 
 //This Class Contains All Code Snippet Related Logic
 
-import com.PlugNPlay.www.dto.CodeSnippestDto;
+import com.PlugNPlay.www.dto.CodeSnippestRequest;
 import com.PlugNPlay.www.dto.CodeSnippestResponse;
 
 
@@ -15,7 +15,7 @@ public interface CodeSnippestInterface {
 
     List<CodeSnippestResponse> getAllDtos();
 
-    CodeSnippestResponse saveUserCode(CodeSnippestDto codeSnippestDto);
+    CodeSnippestResponse saveUserCode(CodeSnippestRequest codeSnippestRequest);
 
     CodeSnippestResponse getSnippestById(UUID id);
 }

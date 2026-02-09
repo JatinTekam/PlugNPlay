@@ -3,7 +3,7 @@ package com.PlugNPlay.www.service;
 import com.PlugNPlay.www.dto.LoginRequest;
 import com.PlugNPlay.www.dto.RefreshTokenRequest;
 import com.PlugNPlay.www.dto.TokenResponse;
-import com.PlugNPlay.www.dto.UserDTO;
+import com.PlugNPlay.www.dto.UserRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public interface AuthService {
 
     //Register User
-    UserDTO registerUser(UserDTO userDTO);
+    UserRequest registerUser(UserRequest userRequest);
 
     //Login User
     TokenResponse loginUser(LoginRequest loginRequest, HttpServletResponse response);

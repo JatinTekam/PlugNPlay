@@ -1,6 +1,6 @@
 package com.PlugNPlay.www.serviceImpl;
 
-import com.PlugNPlay.www.dto.UserDTO;
+import com.PlugNPlay.www.dto.UserRequest;
 import com.PlugNPlay.www.entity.User;
 import com.PlugNPlay.www.enums.Provider;
 import com.PlugNPlay.www.exceptions.ResourceNotFoundException;
@@ -31,64 +31,64 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDTO createUser(UserDTO userDto) {
+    public UserRequest createUser(UserRequest userRequest) {
 
-        if (userDto.getName() == null && userDto.getName().isBlank()) {
+        if (userRequest.getName() == null && userRequest.getName().isBlank()) {
             throw new IllegalArgumentException("Name Is Required");
         }
 
-        if (userDto.getEmail() == null && userDto.getEmail().isBlank()) {
+        if (userRequest.getEmail() == null && userRequest.getEmail().isBlank()) {
             throw new IllegalArgumentException("Email Is Required");
         }
 
-        if (userRepository.existsByEmail(userDto.getEmail())) {
+        if (userRepository.existsByEmail(userRequest.getEmail())) {
             throw new IllegalArgumentException("Email Already Exists");
         }
 
-        if(userDto.getPassword()==null || userDto.getPassword().isBlank()){
+        if(userRequest.getPassword()==null || userRequest.getPassword().isBlank()){
             throw new IllegalArgumentException("Password Is Required");
         }
 
 
-        User user = modelMapper.map(userDto, User.class);
+        User user = modelMapper.map(userRequest, User.class);
 
-        user.setProvider(userDto.getProvider()!=null ? userDto.getProvider() : Provider.LOCAL);
+        user.setProvider(userRequest.getProvider()!=null ? userRequest.getProvider() : Provider.LOCAL);
 
         User savedUser = userRepository.saveAndFlush(user);
 
-        return modelMapper.map(savedUser,UserDTO.class);
+        return modelMapper.map(savedUser, UserRequest.class);
     }
 
     //Get User By Email
     @Override
-    public UserDTO getUserByEmail(String email) {
+    public UserRequest getUserByEmail(String email) {
         User user = userRepository
                 .findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User Not Found With Given Email"));
 
         user.setPassword(null);
-        return modelMapper.map(user,UserDTO.class);
+        return modelMapper.map(user, UserRequest.class);
 
     }
 
     @Override
     @Transactional
-    public UserDTO updateUser(UserDTO userDto, String userId) {
+    public UserRequest updateUser(UserRequest userRequest, String userId) {
         UUID uid = UUID.fromString(userId);
         User dbUser = userRepository
                    .findById(uid)
                    .orElseThrow(() -> new ResourceNotFoundException("User Not Found With Given Id"));
 
-        if(userDto.getName()!=null) dbUser.setName(userDto.getName());
-        if(userDto.getProvider()!=null) dbUser.setProvider(userDto.getProvider());
+        if(userRequest.getName()!=null) dbUser.setName(userRequest.getName());
+        if(userRequest.getProvider()!=null) dbUser.setProvider(userRequest.getProvider());
 
-        if(userDto.getPassword()!=null) dbUser.setPassword(userDto.getPassword());
+        if(userRequest.getPassword()!=null) dbUser.setPassword(userRequest.getPassword());
 
-        dbUser.setEnable(userDto.isEnable());
+        dbUser.setEnable(userRequest.isEnable());
         dbUser.setUpdatedTime(LocalDateTime.now());
         User updatadedUser = userRepository.save(dbUser);
 
-        return modelMapper.map(updatadedUser,UserDTO.class);
+        return modelMapper.map(updatadedUser, UserRequest.class);
     }
 
     @Override
@@ -102,22 +102,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserById(String userId) {
+    public UserRequest getUserById(String userId) {
         UUID uid = UUID.fromString(userId);
         User user = userRepository.findById(uid)
                 .orElseThrow(() -> new ResourceNotFoundException("User Not Found With Given Id"));
 
         user.setPassword(null);
-        return modelMapper.map(user,UserDTO.class);
+        return modelMapper.map(user, UserRequest.class);
     }
 
     @Override
-    public Iterable<UserDTO> getAllUsers() {
+    public Iterable<UserRequest> getAllUsers() {
         return userRepository
                 .findAll()
                 .stream()
                 .map(user->
-                modelMapper.map(user,UserDTO.class)
+                modelMapper.map(user, UserRequest.class)
                 ).toList();
     }
 
