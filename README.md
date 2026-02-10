@@ -445,7 +445,6 @@ const baseUrl = axios.create({
 // Endpoints:
 - GET /profile         // Get user profile
 - PUT /profile         // Update profile
-- DELETE /account      // Delete account
 - GET /my-templates    // User's saved templates
 ```
 
