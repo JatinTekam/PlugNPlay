@@ -95,7 +95,7 @@ public class SecurityConfig {
 
         var config=new CorsConfiguration();
 
-        config.setAllowedOrigins(List.of(FRONTEND_URL));
+        config.setAllowedOrigins(List.of(FRONTEND_URL,"http://localhost:5173"));
         config.setAllowedMethods(List.of("GET","POST","PATCH","PUT","DELETE","OPTIONS"));
         config.setAllowedHeaders(List.of("Authorization","Content-Type","X-CSRF-TOKEN","Accept"));
         config.setAllowCredentials(true);
