@@ -508,8 +508,9 @@ const baseUrl = axios.create({
 ### **.env**
 ```
 VITE_BASE_URL=/
-VITE_API_ENDPOINT=/
-# Add other environment variables as needed
+VITE_OAUTH_URL=/
+VITE_USER_URL=/
+VITE_API_DOCS_URL=/
 ```
 
 ### **tailwind.config.js** (Default)
