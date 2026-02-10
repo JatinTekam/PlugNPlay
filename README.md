@@ -9,7 +9,7 @@
 
 ## 📋 Table of Contents
 
-1. [Project Overview](#project-overview)
+1. [Project Overview](#-project-overview)
 2. [Key Technologies & Dependencies](#key-technologies--dependencies)
 3. [Project Structure](#project-structure)
 4. [Folder Structure Details](#folder-structure-details)
@@ -22,7 +22,7 @@
 
 ---
 
-## 🎯 ## Project Overview
+## 🎯  Project Overview
 
 **Plug & Play** is a modern web application built with React and Vite that provides:
 
